@@ -9,7 +9,7 @@ with filtered_invoices as (
     select
         customer_id,
         total_amount
-    from {{ ref('bil_invoices') }}
+    from {{ source('Combined Source', 'bil_invoices') }}
     where invoice_date between '{{ start_date }}' and '{{ end_date }}'
 )
 
@@ -23,4 +23,3 @@ select
     '{{ start_date }}' as period_start,
     '{{ end_date }}' as period_end
 from filtered_invoices
-;

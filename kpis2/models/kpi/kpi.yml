@@ -1,0 +1,4 @@
+version: 2
+
+# This file contains tests and validations that apply across multiple KPI models
+# Individual model definitions have been moved to their respective YAML files
