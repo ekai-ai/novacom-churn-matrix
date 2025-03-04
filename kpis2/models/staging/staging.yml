@@ -1,0 +1,56 @@
+version: 2
+
+models:
+  - name: stg_invoices
+    description: Cleaned view of invoices data
+    columns:
+      - name: invoice_id
+        description: Primary key for invoices
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        description: Foreign key to customers
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_customers')
+              field: customer_id
+      - name: total_amount
+        description: Total invoice amount
+        tests:
+          - not_null
+          - positive_values
+      - name: invoice_date
+        description: Date of the invoice
+        tests:
+          - not_null
+      - name: status
+        description: Status of the invoice
+        tests:
+          - not_null
+          - value_in_set:
+              valid_values: ['paid', 'pending', 'overdue', 'cancelled']
+
+  - name: stg_customers
+    description: Cleaned view of customer data
+    columns:
+      - name: customer_id
+        description: Primary key for customers
+        tests:
+          - unique
+          - not_null
+      - name: customer_segment
+        description: Customer segment classification
+        tests:
+          - not_null
+      - name: customer_tier
+        description: Customer tier classification
+        tests:
+          - not_null
+      - name: status
+        description: Status of the customer
+        tests:
+          - not_null
+          - value_in_set:
+              valid_values: ['active', 'inactive', 'churned', 'new']
