@@ -1,0 +1,16 @@
+version: 2
+
+models:
+  - name: customer_acquisition_cost
+    description: |
+      This model calculates the Customer Acquisition Cost (CAC) by dividing the total marketing campaign budget by the number of new customers acquired.
+      A new customer is identified when the campaign target has a positive response (response_flag = true).
+    columns:
+      - name: total_budget
+        description: "The sum of the budgets of all marketing campaigns."
+      - name: acquired_customers
+        description: "The distinct count of customers who responded positively to the campaign (i.e., response_flag = true)."
+      - name: customer_acquisition_cost
+        description: |
+          The average cost of acquiring a new customer. It is calculated by dividing the total budget by the number of acquired customers.
+          Formula: SUM(mkt_campaigns.budget) / COUNT(DISTINCT CASE WHEN mkt_campaign_targets.response_flag = TRUE THEN mkt_campaign_targets.customer_id END).
