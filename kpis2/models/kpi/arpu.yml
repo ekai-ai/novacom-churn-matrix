@@ -1,0 +1,18 @@
+version: 2
+
+kpis:
+  - name: average_revenue_per_user
+    label: "Average Revenue Per User (ARPU)"
+    description: "Monthly average revenue generated per customer. ARPU is calculated by dividing the total revenue generated from invoices within a specific month by the distinct number of customers that were invoiced during that month."
+    calculation: "ARPU = (SUM(bil_invoices.total_amount) FILTER (WHERE invoice_date BETWEEN 'YYYY-MM-01' AND 'YYYY-MM-31')) / (COUNT(DISTINCT bil_invoices.customer_id) FILTER (WHERE invoice_date BETWEEN 'YYYY-MM-01' AND 'YYYY-MM-31'))"
+    model: "models/kpi/arpu.sql"
+    sources:
+      - name: bil_invoices
+        description: "Billing invoices table containing revenue and customer information."
+    columns:
+      - name: total_revenue
+        description: "Sum of invoice total_amounts for the given month."
+      - name: total_customers
+        description: "Count of distinct customer_ids invoiced within the given month."
+      - name: arpu
+        description: "Calculated Average Revenue Per User, representing monthly average revenue per customer."

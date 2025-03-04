@@ -1,0 +1,14 @@
+version: 2
+models:
+  - name: service_adoption_rate
+    description: >
+      The Service Adoption Rate KPI measures the percentage of customers who subscribe to multiple services. 
+      It is calculated as the ratio of customers with more than one active service assignment to the total number of customers, multiplied by 100.
+    columns:
+      - name: service_adoption_rate
+        description: >
+          The final computed percentage indicating the adoption rate. 
+          It is derived from the SQL logic which counts customers with more than one active service and divides by the total number of customers.
+        tests:
+          - not_null
+          - numeric
