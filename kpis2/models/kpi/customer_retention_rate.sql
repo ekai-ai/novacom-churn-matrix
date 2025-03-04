@@ -5,27 +5,41 @@
 -- over a defined period. The period boundaries are defined using the
 -- variables 'period_start' and 'period_end'.
 
+{% set period_start = var("period_start", "2023-01-01") %}
+{% set period_end = var("period_end", "2023-12-31") %}
+
 with total_customers as (
     select
-        count(distinct customer_id) as total_customers
-    from {{ ref('prv_service_assignments') }}
-    where start_date <= '{{ var("period_start") }}'
-      and (end_date is null or end_date >= '{{ var("period_start") }}')
+        count(distinct customer_id) as customers_start
+    from {{ source('Combined Source', 'prv_service_assignments') }}
+    where start_date <= '{{ period_start }}'
+      and (end_date is null or end_date >= '{{ period_start }}')
 ),
 retained_customers as (
     select
-        count(distinct customer_id) as retained_customers
-    from {{ ref('prv_service_assignments') }}
-    where start_date <= '{{ var("period_start") }}'
-      and (end_date is null or end_date >= '{{ var("period_end") }}')
+        count(distinct customer_id) as customers_retained
+    from {{ source('Combined Source', 'prv_service_assignments') }}
+    where start_date <= '{{ period_start }}'
+      and (end_date is null or end_date >= '{{ period_end }}')
+),
+end_customers as (
+    select
+        count(distinct customer_id) as customers_end
+    from {{ source('Combined Source', 'prv_service_assignments') }}
+    where start_date <= '{{ period_end }}'
+      and (end_date is null or end_date >= '{{ period_end }}')
 )
 
 select
-    r.retained_customers,
-    t.total_customers,
+    '{{ period_start }}' as period_start,
+    '{{ period_end }}' as period_end,
+    s.customers_start,
+    e.customers_end,
+    r.customers_retained,
     case
-        when t.total_customers = 0 then 0
-        else (r.retained_customers * 100.0 / t.total_customers)
-    end as customer_retention_rate
-from retained_customers r
-cross join total_customers t
+        when s.customers_start = 0 then 0
+        else (r.customers_retained::float / s.customers_start)
+    end as retention_rate
+from total_customers s
+cross join retained_customers r
+cross join end_customers e

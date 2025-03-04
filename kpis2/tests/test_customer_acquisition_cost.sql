@@ -1,13 +1,11 @@
 -- Test to ensure CAC calculation is correct
--- CAC should equal total_acquisition_cost / new_customers
+-- CAC should equal total_budget / acquired_customers
 
 with cac_data as (
     select
-        total_acquisition_cost,
-        new_customers,
-        cac,
-        period_start,
-        period_end
+        total_budget as total_acquisition_cost,
+        acquired_customers as new_customers,
+        customer_acquisition_cost as cac
     from {{ ref('customer_acquisition_cost') }}
 ),
 

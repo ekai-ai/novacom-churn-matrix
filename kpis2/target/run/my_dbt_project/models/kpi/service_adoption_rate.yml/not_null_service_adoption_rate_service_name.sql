@@ -1,0 +1,19 @@
+select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+    
+
+
+
+select service_name
+from NOVACOM.KPIS.service_adoption_rate
+where service_name is null
+
+
+
+      
+    ) dbt_internal_test

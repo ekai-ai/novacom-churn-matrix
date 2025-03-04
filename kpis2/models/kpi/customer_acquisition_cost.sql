@@ -6,8 +6,8 @@ with campaign_data as (
         c.budget,
         t.customer_id,
         t.response_flag
-    from {{ ref('mkt_campaigns') }} as c
-    left join {{ ref('mkt_campaign_targets') }} as t
+    from {{ source('Combined Source', 'mkt_campaigns') }} as c
+    left join {{ source('Combined Source', 'mkt_campaign_targets') }} as t
         on c.campaign_id = t.campaign_id
 ),
 aggregated as (
@@ -24,4 +24,4 @@ select
         when acquired_customers = 0 then null
         else total_budget / acquired_customers
     end as customer_acquisition_cost
-from aggregated;
+from aggregated

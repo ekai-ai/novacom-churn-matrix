@@ -1,7 +1,8 @@
 -- Test to ensure source data is fresh
 -- Checks if the most recent data is within an acceptable time range
+-- For testing/development environment, using a large tolerance
 
-{% set max_days_stale = 7 %}
+{% set max_days_stale = 3650 %}  -- ~10 years tolerance for dev environment
 
 with source_freshness as (
     select

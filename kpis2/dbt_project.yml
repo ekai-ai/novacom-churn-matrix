@@ -3,7 +3,7 @@ version: '1.0'
 config-version: 2
 
 # The name of the profile in your profiles.yml file.
-profile: 'my_dbt_project'
+profile: 'novacom-profile'
 
 # Define where dbt should look for resources.
 model-paths: ["models"]
