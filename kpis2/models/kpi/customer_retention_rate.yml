@@ -6,12 +6,31 @@ models:
       This model calculates the Customer Retention Rate KPI.
       Definition: Percentage of customers who remain subscribed to services over a defined period.
     columns:
-      - name: customer_retention_rate
-        description: "The retention rate calculated as (retained customers / total customers) * 100."
-      - name: retained_customers
-        description: "The number of customers who remained subscribed until the end of the period (i.e., those with no end_date or an end_date on or after the period end date)."
-      - name: total_customers
-        description: "The total number of customers who were active at the start of the period (i.e., those with start_date on or before the period start date and still active on the period start date)."
+      - name: period_start
+        description: "Start date of the period for which retention is calculated"
+        tests:
+          - not_null
+      - name: period_end
+        description: "End date of the period for which retention is calculated"
+        tests:
+          - not_null
+      - name: customers_start
+        description: "The total number of customers who were active at the start of the period"
+        tests:
+          - not_null
+          - positive_values
+      - name: customers_end
+        description: "The total number of customers who were active at the end of the period"
+        tests:
+          - not_null
+      - name: customers_retained
+        description: "The number of customers who remained subscribed throughout the entire period"
+        tests:
+          - not_null
+      - name: retention_rate
+        description: "The retention rate calculated as (retained customers / total customers)"
+        tests:
+          - not_null
 
     meta:
       kpi:

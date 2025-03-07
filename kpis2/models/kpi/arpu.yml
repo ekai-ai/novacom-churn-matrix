@@ -1,5 +1,33 @@
 version: 2
 
+models:
+  - name: arpu
+    description: "Average Revenue Per User (ARPU) calculation for a given time period"
+    columns:
+      - name: total_revenue
+        description: "Sum of invoice total_amounts for the given period."
+        tests:
+          - not_null
+          - positive_values
+      - name: total_customers
+        description: "Count of distinct customer_ids invoiced within the given period."
+        tests:
+          - not_null
+          - positive_values
+      - name: arpu
+        description: "Calculated Average Revenue Per User, representing average revenue per customer."
+        tests:
+          - not_null
+          - positive_values
+      - name: period_start
+        description: "Start date of the period for ARPU calculation"
+        tests:
+          - not_null
+      - name: period_end
+        description: "End date of the period for ARPU calculation"
+        tests:
+          - not_null
+
 kpis:
   - name: average_revenue_per_user
     label: "Average Revenue Per User (ARPU)"
@@ -9,10 +37,3 @@ kpis:
     sources:
       - name: bil_invoices
         description: "Billing invoices table containing revenue and customer information."
-    columns:
-      - name: total_revenue
-        description: "Sum of invoice total_amounts for the given month."
-      - name: total_customers
-        description: "Count of distinct customer_ids invoiced within the given month."
-      - name: arpu
-        description: "Calculated Average Revenue Per User, representing monthly average revenue per customer."
