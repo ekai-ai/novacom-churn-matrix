@@ -1,0 +1,104 @@
+version: 2
+models:
+-   name: FactInvoice
+    description: Invoice fact table, containing invoice details and related metrics.
+    columns:
+    -   name: INVOICE_ID
+        tests:
+        - not_null
+        - unique
+        meta:
+            column_type: int
+    -   name: CUSTOMER_ID
+        tests:
+        - not_null
+        meta:
+            column_type: int
+    -   name: INVOICE_DATE_KEY
+        tests:
+        - not_null
+        meta:
+            column_type: date
+    -   name: DUE_DATE_KEY
+        tests:
+        - not_null
+        meta:
+            column_type: date
+    -   name: TOTAL_AMOUNT
+        tests:
+        - not_null
+        - 'expression_is_true: TOTAL_AMOUNT >= 0'
+        meta:
+            column_type: decimal(10,2)
+    -   name: TAX_AMOUNT
+        tests:
+        - not_null
+        - 'expression_is_true: TAX_AMOUNT >= 0'
+        meta:
+            column_type: decimal(10,2)
+    -   name: DISCOUNT_AMOUNT
+        tests:
+        - not_null
+        - 'expression_is_true: DISCOUNT_AMOUNT >= 0'
+        meta:
+            column_type: decimal(10,2)
+    -   name: PAYMENT_AMOUNT
+        tests:
+        - 'expression_is_true: PAYMENT_AMOUNT >= 0'
+        meta:
+            column_type: decimal(10,2)
+    -   name: CURRENCY_CODE
+        tests:
+        - not_null
+        - 'regex: ^[A-Z]{3}$'
+        meta:
+            column_type: string
+    -   name: STATUS
+        tests:
+        - not_null
+        - 'accepted_values: [''Issued'', ''Paid'', ''Overdue'', ''Cancelled'']'
+        meta:
+            column_type: string
+    -   name: ITEM_CODE
+        
+        meta:
+            column_type: string
+    -   name: QUANTITY
+        tests:
+        - 'expression_is_true: QUANTITY >= 0'
+        meta:
+            column_type: int
+    -   name: UNIT_PRICE
+        tests:
+        - 'expression_is_true: UNIT_PRICE >= 0'
+        meta:
+            column_type: decimal(10,2)
+    -   name: TAX_RATE
+        tests:
+        - 'expression_is_true: TAX_RATE >= 0'
+        meta:
+            column_type: decimal(10,2)
+    -   name: DISCOUNT_RATE
+        tests:
+        - 'expression_is_true: DISCOUNT_RATE >= 0'
+        meta:
+            column_type: decimal(10,2)
+    -   name: LINE_TOTAL
+        tests:
+        - 'expression_is_true: LINE_TOTAL >= 0'
+        meta:
+            column_type: decimal(10,2)
+    -   name: PAYMENT_DATE_KEY
+        
+        meta:
+            column_type: date
+    -   name: PAYMENT_METHOD
+        tests:
+        - 'accepted_values: [''Credit Card'', ''Debit Card'', ''Bank Transfer'', ''Check'',
+            ''Cash'']'
+        meta:
+            column_type: string
+    -   name: TRANSACTION_ID
+        
+        meta:
+            column_type: string

@@ -1,0 +1,58 @@
+version: 2
+models:
+-   name: DimOpportunity
+    description: CRM Opportunity Dimension
+    columns:
+    -   name: OpportunitySK
+        tests:
+        - unique
+        - not_null
+        meta:
+            column_type: int
+    -   name: OPPORTUNITY_ID
+        tests:
+        - not_null
+        meta:
+            column_type: int
+    -   name: ACCOUNT_ID
+        
+        meta:
+            column_type: int
+    -   name: STAGE
+        tests:
+        - "accepted_values:\n          values:\n            - 'Prospecting'\n    \
+            \        - 'Qualification'\n            - 'Needs Analysis'\n         \
+            \   - 'Value Proposition'\n            - 'Negotiation'\n            -\
+            \ 'Closed Won'\n            - 'Closed Lost'"
+        meta:
+            column_type: string
+    -   name: PIPELINE_STAGE
+        
+        meta:
+            column_type: string
+    -   name: AMOUNT
+        tests:
+        - "dbt_expectations.expect_column_values_to_be_of_type:\n          column_type:\
+            \ decimal"
+        meta:
+            column_type: decimal
+    -   name: PROBABILITY_OF_CLOSE
+        tests:
+        - "dbt_expectations.expect_column_values_to_be_between:\n          min_value:\
+            \ 0\n          max_value: 1"
+        meta:
+            column_type: decimal
+    -   name: CLOSE_DATE
+        tests:
+        - "dbt_expectations.expect_column_values_to_be_of_type:\n          column_type:\
+            \ date"
+        meta:
+            column_type: date
+    -   name: ASSIGNED_SALES_REP
+        
+        meta:
+            column_type: string
+    -   name: NEXT_STEP
+        
+        meta:
+            column_type: string

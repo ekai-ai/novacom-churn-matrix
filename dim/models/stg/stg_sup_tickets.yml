@@ -1,0 +1,56 @@
+version: 2
+models:
+-   name: stg_sup_tickets
+    description: Staging table for support tickets, sourced from the SUP_TICKETS table.
+    columns:
+    -   name: TICKET_ID
+        tests:
+        - not_null
+        - unique
+        meta:
+            column_type: int64
+    -   name: CUSTOMER_ID
+        tests:
+        - not_null
+        meta:
+            column_type: int64
+    -   name: CREATED_DATE
+        
+        meta:
+            column_type: datetime(time_unit='us', time_zone=none)
+    -   name: STATUS
+        
+        meta:
+            column_type: string
+    -   name: PRIORITY
+        
+        meta:
+            column_type: string
+    -   name: SUBJECT
+        
+        meta:
+            column_type: string
+    -   name: DESCRIPTION
+        
+        meta:
+            column_type: string
+    -   name: CHANNEL_OF_CONTACT
+        
+        meta:
+            column_type: string
+    -   name: ASSIGNED_AGENT
+        
+        meta:
+            column_type: string
+    -   name: RESOLUTION_DATE
+        
+        meta:
+            column_type: datetime(time_unit='us', time_zone=none)
+    -   name: CREATED_AT
+        
+        meta:
+            column_type: datetime(time_unit='us', time_zone=none)
+    -   name: UPDATED_AT
+        
+        meta:
+            column_type: datetime(time_unit='us', time_zone=none)

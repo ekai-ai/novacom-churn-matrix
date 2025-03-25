@@ -1,0 +1,29 @@
+version: 2
+models:
+-   name: FactSupportTicket
+    description: Support ticket fact table.
+    columns:
+    -   name: TICKET_ID
+        tests:
+        - not_null
+        - unique
+        meta:
+            column_type: int64
+    -   name: CUSTOMER_ID
+        tests:
+        - not_null
+        meta:
+            column_type: int64
+    -   name: CREATED_DATE_KEY
+        tests:
+        - not_null
+        meta:
+            column_type: int64
+    -   name: RESOLUTION_DATE_KEY
+        
+        meta:
+            column_type: int64
+    -   name: TimeToResolutionSeconds
+        
+        meta:
+            column_type: int64

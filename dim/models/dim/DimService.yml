@@ -1,0 +1,41 @@
+version: 2
+models:
+-   name: DimService
+    description: Service dimension, containing service details.
+    columns:
+    -   name: ServiceSK
+        tests:
+        - unique
+        - not_null
+        meta:
+            column_type: int
+    -   name: SERVICE_ID
+        tests:
+        - not_null
+        meta:
+            column_type: int
+    -   name: SERVICE_NAME
+        tests:
+        - not_null
+        meta:
+            column_type: string
+    -   name: SERVICE_TYPE
+        
+        meta:
+            column_type: string
+    -   name: DESCRIPTION
+        
+        meta:
+            column_type: string
+    -   name: MONTHLY_COST
+        
+        meta:
+            column_type: decimal
+    -   name: ACTIVE_FLAG
+        
+        meta:
+            column_type: boolean
+    -   name: PROVISIONING_TEAM
+        
+        meta:
+            column_type: string

@@ -1,0 +1,50 @@
+version: 2
+models:
+-   name: stg_crm_contacts
+    description: Staging table for CRM contacts, sourced from the raw CRM_CONTACTS
+        table.
+    columns:
+    -   name: CONTACT_ID
+        tests:
+        - not_null
+        meta:
+            column_type: int64
+    -   name: CUSTOMER_ID
+        tests:
+        - not_null
+        meta:
+            column_type: int64
+    -   name: CONTACT_TYPE
+        
+        meta:
+            column_type: string
+    -   name: CONTACT_VALUE
+        
+        meta:
+            column_type: string
+    -   name: IS_PRIMARY
+        
+        meta:
+            column_type: boolean
+    -   name: CONTACT_LABEL
+        
+        meta:
+            column_type: string
+    -   name: NOTE
+        
+        meta:
+            column_type: string
+    -   name: CREATED_AT
+        
+        meta:
+            column_type: datetime(time_unit='us', time_zone=none)
+    -   name: UPDATED_AT
+        
+        meta:
+            column_type: datetime(time_unit='us', time_zone=none)
+    -   name: CONTACT_PK
+        tests:
+        - not_null
+        - unique
+        meta:
+            column_type: string

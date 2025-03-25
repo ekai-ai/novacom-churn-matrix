@@ -1,0 +1,57 @@
+version: 2
+models:
+-   name: stg_bil_invoices
+    description: Staging table for invoices from the billing system.
+    columns:
+    -   name: invoice_id
+        tests:
+        - not_null
+        - unique
+        meta:
+            column_type: int64
+    -   name: customer_id
+        tests:
+        - not_null
+        meta:
+            column_type: int64
+    -   name: invoice_date
+        tests:
+        - not_null
+        meta:
+            column_type: date
+    -   name: due_date
+        
+        meta:
+            column_type: date
+    -   name: total_amount
+        
+        meta:
+            column_type: decimal(precision=none, scale=2)
+    -   name: tax_amount
+        
+        meta:
+            column_type: decimal(precision=none, scale=2)
+    -   name: discount_amount
+        
+        meta:
+            column_type: decimal(precision=none, scale=2)
+    -   name: currency_code
+        
+        meta:
+            column_type: string
+    -   name: status
+        
+        meta:
+            column_type: string
+    -   name: note
+        
+        meta:
+            column_type: string
+    -   name: created_at
+        
+        meta:
+            column_type: datetime(time_unit='us', time_zone=none)
+    -   name: updated_at
+        
+        meta:
+            column_type: datetime(time_unit='us', time_zone=none)

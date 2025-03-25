@@ -1,0 +1,36 @@
+version: 2
+models:
+-   name: DimDate
+    description: Date dimension for time intelligence.
+    columns:
+    -   name: DATE_KEY
+        tests:
+        - unique
+        - not_null
+        meta:
+            column_type: INT
+    -   name: FULL_DATE
+        tests:
+        - not_null
+        meta:
+            column_type: DATE
+    -   name: DAY_OF_WEEK
+        
+        meta:
+            column_type: STRING
+    -   name: DAY_OF_MONTH
+        
+        meta:
+            column_type: INT
+    -   name: MONTH
+        
+        meta:
+            column_type: INT
+    -   name: QUARTER
+        
+        meta:
+            column_type: INT
+    -   name: YEAR
+        
+        meta:
+            column_type: INT

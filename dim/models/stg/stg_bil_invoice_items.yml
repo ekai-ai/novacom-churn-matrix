@@ -1,0 +1,56 @@
+version: 2
+models:
+-   name: stg_bil_invoice_items
+    description: Staging table for invoice items from the billing system.
+    columns:
+    -   name: ITEM_ID
+        tests:
+        - not_null
+        meta:
+            column_type: int64
+    -   name: INVOICE_ID
+        tests:
+        - not_null
+        meta:
+            column_type: int64
+    -   name: ITEM_CODE
+        tests:
+        - not_null
+        - unique
+        meta:
+            column_type: string
+    -   name: DESCRIPTION
+        
+        meta:
+            column_type: string
+    -   name: QUANTITY
+        tests:
+        - not_null
+        meta:
+            column_type: int64
+    -   name: UNIT_PRICE
+        tests:
+        - not_null
+        meta:
+            column_type: decimal
+    -   name: TAX_RATE
+        
+        meta:
+            column_type: decimal
+    -   name: DISCOUNT_RATE
+        
+        meta:
+            column_type: decimal
+    -   name: LINE_TOTAL
+        tests:
+        - not_null
+        meta:
+            column_type: decimal
+    -   name: CREATED_AT
+        
+        meta:
+            column_type: datetime
+    -   name: UPDATED_AT
+        
+        meta:
+            column_type: datetime

@@ -1,0 +1,56 @@
+version: 2
+models:
+-   name: stg_crm_opportunities
+    description: Staging table for CRM opportunities data.
+    columns:
+    -   name: OPPORTUNITY_ID
+        tests:
+        - not_null
+        - unique
+        meta:
+            column_type: int64
+    -   name: ACCOUNT_ID
+        tests:
+        - not_null
+        meta:
+            column_type: int64
+    -   name: STAGE
+        
+        meta:
+            column_type: string
+    -   name: PIPELINE_STAGE
+        
+        meta:
+            column_type: string
+    -   name: AMOUNT
+        
+        meta:
+            column_type: decimal(precision=none, scale=2)
+    -   name: PROBABILITY_OF_CLOSE
+        
+        meta:
+            column_type: decimal(precision=none, scale=2)
+    -   name: CLOSE_DATE
+        
+        meta:
+            column_type: date
+    -   name: ASSIGNED_SALES_REP
+        
+        meta:
+            column_type: string
+    -   name: NEXT_STEP
+        
+        meta:
+            column_type: string
+    -   name: NOTE
+        
+        meta:
+            column_type: string
+    -   name: CREATED_AT
+        
+        meta:
+            column_type: datetime(time_unit='us', time_zone=none)
+    -   name: UPDATED_AT
+        
+        meta:
+            column_type: datetime(time_unit='us', time_zone=none)

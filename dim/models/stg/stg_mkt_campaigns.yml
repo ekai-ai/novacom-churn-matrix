@@ -1,0 +1,53 @@
+version: 2
+models:
+-   name: stg_mkt_campaigns
+    description: Staging table for MKT_CAMPAIGNS, focusing on cleaning and preparing
+        the data for further processing.
+    columns:
+    -   name: CAMPAIGN_ID
+        tests:
+        - not_null
+        - unique
+        meta:
+            column_type: int64
+    -   name: NAME
+        tests:
+        - not_null
+        meta:
+            column_type: string
+    -   name: CAMPAIGN_TYPE
+        
+        meta:
+            column_type: string
+    -   name: OBJECTIVE
+        
+        meta:
+            column_type: string
+    -   name: TARGET_AUDIENCE
+        
+        meta:
+            column_type: string
+    -   name: CONVERSION_GOAL
+        
+        meta:
+            column_type: string
+    -   name: START_DATE
+        
+        meta:
+            column_type: date
+    -   name: END_DATE
+        
+        meta:
+            column_type: date
+    -   name: BUDGET
+        
+        meta:
+            column_type: decimal(precision=none, scale=2)
+    -   name: CREATED_AT
+        
+        meta:
+            column_type: datetime(time_unit='us', time_zone=none)
+    -   name: UPDATED_AT
+        
+        meta:
+            column_type: datetime(time_unit='us', time_zone=none)

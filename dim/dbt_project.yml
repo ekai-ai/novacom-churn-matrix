@@ -1,0 +1,19 @@
+name: 'my_dbt_project'
+version: '1.0'
+config-version: 2
+
+# The name of the profile in your profiles.yml file.
+profile: 'my_dbt_project'
+
+# Define where dbt should look for resources.
+source-paths: ["models"]
+analysis-paths: ["analysis"]
+macro-paths: ["macros"]
+data-paths: ["data"]
+test-paths: ["tests"]
+
+# Specify where dbt will put compiled SQL and artifacts.
+target-path: "target"
+clean-targets:
+  - "target"
+  - "dbt_modules" 

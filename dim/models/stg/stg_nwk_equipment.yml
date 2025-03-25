@@ -1,0 +1,73 @@
+version: 2
+models:
+-   name: stg_nwk_equipment
+    description: Staging model for NWK_EQUIPMENT table. This model selects data from
+        the raw NWK_EQUIPMENT source, applies basic cleansing and standardization,
+        and stages the data for downstream transformations.
+    columns:
+    -   name: EQUIPMENT_ID
+        tests:
+        - not_null
+        - unique
+        meta:
+            column_type: int64
+    -   name: ASSIGNMENT_ID
+        tests:
+        - not_null
+        meta:
+            column_type: int64
+    -   name: EQUIPMENT_TYPE
+        tests:
+        - not_null
+        meta:
+            column_type: string
+    -   name: MODEL
+        tests:
+        - not_null
+        meta:
+            column_type: string
+    -   name: SERIAL_NUMBER
+        tests:
+        - not_null
+        meta:
+            column_type: string
+    -   name: FIRMWARE_VERSION
+        tests:
+        - not_null
+        meta:
+            column_type: string
+    -   name: IP_ADDRESS
+        tests:
+        - not_null
+        meta:
+            column_type: string
+    -   name: MAC_ADDRESS
+        tests:
+        - not_null
+        meta:
+            column_type: string
+    -   name: LOCATION
+        tests:
+        - not_null
+        meta:
+            column_type: string
+    -   name: STATUS
+        tests:
+        - not_null
+        meta:
+            column_type: string
+    -   name: LAST_MAINTENANCE_DATE
+        tests:
+        - not_null
+        meta:
+            column_type: date
+    -   name: CREATED_AT
+        tests:
+        - not_null
+        meta:
+            column_type: datetime
+    -   name: UPDATED_AT
+        tests:
+        - not_null
+        meta:
+            column_type: datetime
