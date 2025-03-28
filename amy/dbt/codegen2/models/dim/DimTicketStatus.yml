@@ -1,0 +1,17 @@
+version: 2
+models:
+-   name: DimTicketStatus
+    description: Reference dimension for support ticket statuses.
+    columns:
+    -   name: TicketStatusSK
+        tests:
+        - unique
+        - not_null
+        meta:
+            column_type: INTEGER
+    -   name: TicketStatusName
+        tests:
+        - unique
+        - not_null
+        meta:
+            column_type: VARCHAR(50)

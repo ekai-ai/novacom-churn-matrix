@@ -1,0 +1,59 @@
+version: 2
+models:
+-   name: stg_crm__accounts
+    description: Staging model for CRM Accounts data. This table stores detailed account
+        information for customers, including identifiers, types, statuses, balances,
+        and address information. It is a key component for managing customer financial
+        data.
+    columns:
+    -   name: ACCOUNT_ID
+        tests:
+        - unique
+        - not_null
+        meta:
+            column_type: int
+    -   name: CUSTOMER_ID
+        tests:
+        - not_null
+        meta:
+            column_type: int
+    -   name: ACCOUNT_TYPE
+        
+        meta:
+            column_type: varchar
+    -   name: CREATION_DATE
+        
+        meta:
+            column_type: date
+    -   name: STATUS
+        
+        meta:
+            column_type: varchar
+    -   name: CURRENCY_CODE
+        
+        meta:
+            column_type: varchar
+    -   name: BILLING_ADDRESS
+        
+        meta:
+            column_type: varchar
+    -   name: SHIPPING_ADDRESS
+        
+        meta:
+            column_type: varchar
+    -   name: ACCOUNT_BALANCE
+        
+        meta:
+            column_type: decimal
+    -   name: NOTE
+        
+        meta:
+            column_type: varchar
+    -   name: CREATED_AT
+        
+        meta:
+            column_type: varchar
+    -   name: UPDATED_AT
+        
+        meta:
+            column_type: varchar

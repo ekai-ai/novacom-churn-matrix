@@ -1,0 +1,99 @@
+version: 2
+models:
+-   name: FactCustomerSnapshot
+    description: Periodic snapshot fact table capturing key customer metrics and status
+        at regular intervals (e.g., monthly) to support churn prediction. The grain
+        is one row per customer per snapshot period. Filters ensure referential integrity
+        and validity of measures. Business rules enforce non-null keys, valid numeric
+        measures, and logical relationships among ticket counts.
+    columns:
+    -   name: CustomerSK
+        tests:
+        - not_null
+        meta:
+            column_type: INTEGER
+    -   name: SnapshotDateSK
+        tests:
+        - not_null
+        meta:
+            column_type: INTEGER
+    -   name: ChurnLabel
+        tests:
+        - not_null
+        - 'accepted_values: [0, 1]'
+        meta:
+            column_type: INTEGER
+    -   name: TotalBilledAmountPeriod
+        tests:
+        - not_null
+        meta:
+            column_type: DECIMAL(18, 2)
+    -   name: TotalPaidAmountPeriod
+        tests:
+        - not_null
+        meta:
+            column_type: DECIMAL(18, 2)
+    -   name: OutstandingBalanceEndPeriod
+        tests:
+        - not_null
+        meta:
+            column_type: DECIMAL(18, 2)
+    -   name: DaysSinceLastPayment
+        tests:
+        - not_null
+        - 'greater_than_or_equal_to: 0'
+        meta:
+            column_type: INTEGER
+    -   name: ActiveServicesCount
+        tests:
+        - not_null
+        - 'greater_than_or_equal_to: 0'
+        meta:
+            column_type: INTEGER
+    -   name: TotalDataConsumedGBPeriod
+        tests:
+        - not_null
+        - 'greater_than_or_equal_to: 0'
+        meta:
+            column_type: DECIMAL(18, 4)
+    -   name: SupportTicketsOpenedPeriod
+        tests:
+        - not_null
+        - 'greater_than_or_equal_to: 0'
+        meta:
+            column_type: INTEGER
+    -   name: SupportTicketsResolvedPeriod
+        tests:
+        - not_null
+        - 'greater_than_or_equal_to: 0'
+        - 'expression_is_true: SupportTicketsResolvedPeriod <= SupportTicketsOpenedPeriod'
+        meta:
+            column_type: INTEGER
+    -   name: AvgTicketResolutionTimePeriod
+        tests:
+        - 'greater_than_or_equal_to: 0'
+        meta:
+            column_type: DECIMAL(10, 2)
+    -   name: MarketingCampaignsTargetedPeriod
+        tests:
+        - not_null
+        - 'greater_than_or_equal_to: 0'
+        meta:
+            column_type: INTEGER
+    -   name: MarketingResponsesPeriod
+        tests:
+        - not_null
+        - 'greater_than_or_equal_to: 0'
+        meta:
+            column_type: INTEGER
+    -   name: NetworkOutagesCountPeriod
+        tests:
+        - not_null
+        - 'greater_than_or_equal_to: 0'
+        meta:
+            column_type: INTEGER
+    -   name: CurrentAccountBalance
+        tests:
+        - not_null
+        meta:
+            column_type: DECIMAL(18, 2)

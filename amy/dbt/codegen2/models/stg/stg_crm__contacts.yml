@@ -1,0 +1,45 @@
+version: 2
+models:
+-   name: stg_crm__contacts
+    description: Staging model for CRM contacts. Stores customer contact information,
+        including contact types, values, labels, and notes. Links each contact to
+        a customer via CUSTOMER_ID.
+    columns:
+    -   name: CONTACT_ID
+        tests:
+        - not_null
+        meta:
+            column_type: INTEGER
+    -   name: CUSTOMER_ID
+        tests:
+        - not_null
+        meta:
+            column_type: INTEGER
+    -   name: CONTACT_TYPE
+        
+        meta:
+            column_type: VARCHAR
+    -   name: CONTACT_VALUE
+        
+        meta:
+            column_type: VARCHAR
+    -   name: IS_PRIMARY
+        
+        meta:
+            column_type: BOOLEAN
+    -   name: CONTACT_LABEL
+        
+        meta:
+            column_type: VARCHAR
+    -   name: NOTE
+        
+        meta:
+            column_type: VARCHAR
+    -   name: CREATED_AT
+        
+        meta:
+            column_type: VARCHAR
+    -   name: UPDATED_AT
+        
+        meta:
+            column_type: VARCHAR

@@ -1,0 +1,58 @@
+version: 2
+models:
+-   name: stg_bil__invoices
+    description: Staging model for invoice records with billing details for customers.
+        Contains information such as invoice dates, due dates, amounts, tax, discounts,
+        currency, status, and associated timestamps.
+    columns:
+    -   name: INVOICE_ID
+        tests:
+        - not_null
+        - unique
+        meta:
+            column_type: integer
+    -   name: CUSTOMER_ID
+        tests:
+        - not_null
+        meta:
+            column_type: integer
+    -   name: INVOICE_DATE
+        
+        meta:
+            column_type: date
+    -   name: DUE_DATE
+        
+        meta:
+            column_type: date
+    -   name: TOTAL_AMOUNT
+        
+        meta:
+            column_type: numeric
+    -   name: TAX_AMOUNT
+        
+        meta:
+            column_type: numeric
+    -   name: DISCOUNT_AMOUNT
+        
+        meta:
+            column_type: numeric
+    -   name: CURRENCY_CODE
+        
+        meta:
+            column_type: varchar
+    -   name: STATUS
+        
+        meta:
+            column_type: varchar
+    -   name: NOTE
+        
+        meta:
+            column_type: varchar
+    -   name: CREATED_AT
+        
+        meta:
+            column_type: timestamp_ntz
+    -   name: UPDATED_AT
+        
+        meta:
+            column_type: timestamp_ntz

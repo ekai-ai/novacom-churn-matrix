@@ -1,0 +1,51 @@
+version: 2
+models:
+-   name: stg_mkt__campaign_targets
+    description: Staging model for marketing campaign targets. Contains records that
+        link customers to marketing campaigns, including assignment dates, communication
+        channels, and contact statuses.
+    columns:
+    -   name: TARGET_ID
+        tests:
+        - unique
+        - not_null
+        meta:
+            column_type: integer
+    -   name: CAMPAIGN_ID
+        tests:
+        - not_null
+        meta:
+            column_type: integer
+    -   name: CUSTOMER_ID
+        tests:
+        - not_null
+        meta:
+            column_type: integer
+    -   name: ASSIGNED_DATE
+        
+        meta:
+            column_type: date
+    -   name: STATUS
+        
+        meta:
+            column_type: string
+    -   name: LAST_CONTACT_DATE
+        
+        meta:
+            column_type: date
+    -   name: CHANNEL
+        
+        meta:
+            column_type: string
+    -   name: RESPONSE_FLAG
+        
+        meta:
+            column_type: boolean
+    -   name: CREATED_AT
+        
+        meta:
+            column_type: timestamp
+    -   name: UPDATED_AT
+        
+        meta:
+            column_type: timestamp

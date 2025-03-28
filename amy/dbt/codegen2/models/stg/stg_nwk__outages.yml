@@ -1,0 +1,53 @@
+version: 2
+models:
+-   name: stg_nwk__outages
+    description: Staging model for network outage events. This table stores detailed
+        records of network outage events, including timing, location, customer impact,
+        and repair information.
+    columns:
+    -   name: OUTAGE_ID
+        tests:
+        - not_null
+        - unique
+        meta:
+            column_type: integer
+    -   name: ASSIGNMENT_ID
+        
+        meta:
+            column_type: integer
+    -   name: START_TIME
+        
+        meta:
+            column_type: string
+    -   name: END_TIME
+        
+        meta:
+            column_type: string
+    -   name: OUTAGE_TYPE
+        
+        meta:
+            column_type: string
+    -   name: REGION
+        
+        meta:
+            column_type: string
+    -   name: IMPACTED_CUSTOMERS_COUNT
+        
+        meta:
+            column_type: integer
+    -   name: CAUSE
+        
+        meta:
+            column_type: string
+    -   name: RESOLUTION
+        
+        meta:
+            column_type: string
+    -   name: CREATED_AT
+        
+        meta:
+            column_type: string
+    -   name: UPDATED_AT
+        
+        meta:
+            column_type: string

@@ -1,0 +1,48 @@
+version: 2
+models:
+-   name: stg_crm__customers
+    description: Staging layer for CRM_CUSTOMERS for ML customer churn prediction.
+        This model excludes PII such as names, email addresses, phone numbers, and
+        physical addresses, and it adds a target Label column based on the customer's
+        status.
+    columns:
+    -   name: CUSTOMER_ID
+        
+        meta:
+            column_type: int
+    -   name: DATE_OF_BIRTH
+        
+        meta:
+            column_type: date
+    -   name: CUSTOMER_SEGMENT
+        
+        meta:
+            column_type: varchar
+    -   name: CUSTOMER_TIER
+        
+        meta:
+            column_type: varchar
+    -   name: START_DATE
+        
+        meta:
+            column_type: date
+    -   name: STATUS
+        
+        meta:
+            column_type: varchar
+    -   name: NOTE
+        
+        meta:
+            column_type: varchar
+    -   name: CREATED_AT
+        
+        meta:
+            column_type: varchar
+    -   name: UPDATED_AT
+        
+        meta:
+            column_type: varchar
+    -   name: Label
+        
+        meta:
+            column_type: int

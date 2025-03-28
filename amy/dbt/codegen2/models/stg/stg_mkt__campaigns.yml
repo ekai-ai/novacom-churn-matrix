@@ -1,0 +1,54 @@
+version: 2
+models:
+-   name: stg_mkt__campaigns
+    description: Staging model for marketing campaigns data. Includes campaign details,
+        objectives, target audience, budget, and timelines.
+    columns:
+    -   name: CAMPAIGN_ID
+        tests:
+        - not_null
+        - unique
+        meta:
+            column_type: int
+    -   name: NAME
+        tests:
+        - not_null
+        - unique
+        meta:
+            column_type: varchar
+    -   name: CAMPAIGN_TYPE
+        
+        meta:
+            column_type: varchar
+    -   name: OBJECTIVE
+        
+        meta:
+            column_type: varchar
+    -   name: TARGET_AUDIENCE
+        
+        meta:
+            column_type: varchar
+    -   name: CONVERSION_GOAL
+        
+        meta:
+            column_type: varchar
+    -   name: START_DATE
+        
+        meta:
+            column_type: date
+    -   name: END_DATE
+        
+        meta:
+            column_type: date
+    -   name: BUDGET
+        
+        meta:
+            column_type: decimal
+    -   name: CREATED_AT
+        
+        meta:
+            column_type: varchar
+    -   name: UPDATED_AT
+        
+        meta:
+            column_type: varchar

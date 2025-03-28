@@ -1,0 +1,51 @@
+version: 2
+models:
+-   name: stg_bil__payments
+    description: Stores payment transactions with details linking payments to invoices.
+        This table captures financial transactions including amounts, dates, methods,
+        and related identifiers, supporting transactional tracking and reconciliation.
+    columns:
+    -   name: PAYMENT_ID
+        tests:
+        - not_null
+        - unique
+        meta:
+            column_type: int
+    -   name: INVOICE_ID
+        tests:
+        - not_null
+        meta:
+            column_type: int
+    -   name: PAYMENT_DATE
+        
+        meta:
+            column_type: date
+    -   name: AMOUNT
+        
+        meta:
+            column_type: decimal
+    -   name: PAYMENT_METHOD
+        
+        meta:
+            column_type: varchar
+    -   name: TRANSACTION_ID
+        tests:
+        - unique
+        meta:
+            column_type: varchar
+    -   name: CURRENCY_CODE
+        
+        meta:
+            column_type: varchar
+    -   name: NOTE
+        
+        meta:
+            column_type: varchar
+    -   name: CREATED_AT
+        
+        meta:
+            column_type: varchar
+    -   name: UPDATED_AT
+        
+        meta:
+            column_type: varchar

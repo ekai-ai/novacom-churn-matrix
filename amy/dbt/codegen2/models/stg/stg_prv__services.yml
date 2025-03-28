@@ -1,0 +1,52 @@
+version: 2
+models:
+-   name: stg_prv__services
+    description: Staging model for service information. Contains information on various
+        services provided, detailing unique IDs, names, types, costs, status, provisioning
+        teams, and timestamps for creation and updates.
+    columns:
+    -   name: SERVICE_ID
+        tests:
+        - not_null
+        - unique
+        meta:
+            column_type: integer
+    -   name: SERVICE_NAME
+        tests:
+        - not_null
+        - unique
+        meta:
+            column_type: varchar
+    -   name: SERVICE_TYPE
+        tests:
+        - not_null
+        meta:
+            column_type: varchar
+    -   name: DESCRIPTION
+        
+        meta:
+            column_type: varchar
+    -   name: MONTHLY_COST
+        tests:
+        - not_null
+        meta:
+            column_type: decimal
+    -   name: ACTIVE_FLAG
+        tests:
+        - not_null
+        meta:
+            column_type: boolean
+    -   name: PROVISIONING_TEAM
+        
+        meta:
+            column_type: varchar
+    -   name: CREATED_DATE
+        tests:
+        - not_null
+        meta:
+            column_type: date
+    -   name: UPDATED_AT
+        tests:
+        - not_null
+        meta:
+            column_type: varchar

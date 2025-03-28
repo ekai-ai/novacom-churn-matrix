@@ -1,0 +1,103 @@
+version: 2
+models:
+-   name: DimCustomer
+    description: Dimension representing the customer, including demographics, account
+        details, segmentation, and status relevant for churn analysis. Excludes PII
+        like name, email, phone, and specific address lines.
+    columns:
+    -   name: CustomerSK
+        tests:
+        - unique
+        - not_null
+        meta:
+            column_type: INTEGER
+    -   name: CustomerID
+        tests:
+        - not_null
+        meta:
+            column_type: INTEGER
+    -   name: AccountID
+        tests:
+        - not_null
+        meta:
+            column_type: INTEGER
+    -   name: City
+        tests:
+        - not_null
+        meta:
+            column_type: VARCHAR(100)
+    -   name: State
+        tests:
+        - not_null
+        meta:
+            column_type: VARCHAR(50)
+    -   name: ZipCode
+        tests:
+        - not_null
+        meta:
+            column_type: VARCHAR(20)
+    -   name: Country
+        tests:
+        - not_null
+        meta:
+            column_type: VARCHAR(50)
+    -   name: CustomerSegment
+        tests:
+        - not_null
+        meta:
+            column_type: VARCHAR(50)
+    -   name: CustomerTier
+        tests:
+        - not_null
+        meta:
+            column_type: VARCHAR(50)
+    -   name: StartDate
+        tests:
+        - not_null
+        meta:
+            column_type: DATE
+    -   name: Status
+        tests:
+        - not_null
+        meta:
+            column_type: VARCHAR(50)
+    -   name: AccountType
+        tests:
+        - not_null
+        meta:
+            column_type: VARCHAR(50)
+    -   name: AccountCreationDate
+        tests:
+        - not_null
+        meta:
+            column_type: DATE
+    -   name: AccountStatus
+        tests:
+        - not_null
+        meta:
+            column_type: VARCHAR(50)
+    -   name: AccountCurrencyCode
+        tests:
+        - not_null
+        meta:
+            column_type: VARCHAR(3)
+    -   name: AccountBalance
+        tests:
+        - not_null
+        meta:
+            column_type: DECIMAL(18,2)
+    -   name: SCDStartDate
+        tests:
+        - not_null
+        meta:
+            column_type: TIMESTAMP
+    -   name: SCDEndDate
+        tests:
+        - not_null
+        meta:
+            column_type: TIMESTAMP
+    -   name: SCDIsCurrent
+        tests:
+        - not_null
+        meta:
+            column_type: BOOLEAN

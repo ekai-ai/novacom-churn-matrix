@@ -1,0 +1,60 @@
+version: 2
+models:
+-   name: DimService
+    description: Dimension representing the services offered by the business.
+    columns:
+    -   name: ServiceSK
+        tests:
+        - unique
+        - not_null
+        meta:
+            column_type: INTEGER
+    -   name: ServiceID
+        tests:
+        - not_null
+        meta:
+            column_type: INTEGER
+    -   name: ServiceName
+        tests:
+        - not_null
+        meta:
+            column_type: VARCHAR(255)
+    -   name: ServiceType
+        tests:
+        - not_null
+        meta:
+            column_type: VARCHAR(50)
+    -   name: Description
+        
+        meta:
+            column_type: VARCHAR(1000)
+    -   name: MonthlyCost
+        tests:
+        - not_null
+        meta:
+            column_type: DECIMAL(18,2)
+    -   name: ActiveFlag
+        tests:
+        - not_null
+        meta:
+            column_type: BOOLEAN
+    -   name: ProvisioningTeam
+        
+        meta:
+            column_type: VARCHAR(100)
+    -   name: CreatedDate
+        
+        meta:
+            column_type: DATE
+    -   name: SCDStartDate
+        
+        meta:
+            column_type: TIMESTAMP
+    -   name: SCDEndDate
+        
+        meta:
+            column_type: TIMESTAMP
+    -   name: SCDIsCurrent
+        
+        meta:
+            column_type: BOOLEAN

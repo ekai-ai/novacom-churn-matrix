@@ -1,0 +1,58 @@
+version: 2
+models:
+-   name: stg_crm__opportunities
+    description: Staging model for CRM opportunities. Holds detailed sales opportunity
+        records including unique identifiers, account associations, sales stages,
+        financial metrics, and timestamps for tracking progress and changes.
+    columns:
+    -   name: OPPORTUNITY_ID
+        tests:
+        - unique
+        - not_null
+        meta:
+            column_type: int
+    -   name: ACCOUNT_ID
+        tests:
+        - not_null
+        meta:
+            column_type: int
+    -   name: STAGE
+        
+        meta:
+            column_type: varchar
+    -   name: PIPELINE_STAGE
+        
+        meta:
+            column_type: varchar
+    -   name: AMOUNT
+        
+        meta:
+            column_type: decimal
+    -   name: PROBABILITY_OF_CLOSE
+        
+        meta:
+            column_type: decimal
+    -   name: CLOSE_DATE
+        
+        meta:
+            column_type: date
+    -   name: ASSIGNED_SALES_REP
+        
+        meta:
+            column_type: varchar
+    -   name: NEXT_STEP
+        
+        meta:
+            column_type: varchar
+    -   name: NOTE
+        
+        meta:
+            column_type: varchar
+    -   name: CREATED_AT
+        
+        meta:
+            column_type: varchar
+    -   name: UPDATED_AT
+        
+        meta:
+            column_type: varchar

@@ -1,0 +1,65 @@
+version: 2
+models:
+-   name: DimCampaign
+    description: Dimension representing marketing campaigns.
+    columns:
+    -   name: CampaignSK
+        tests:
+        - unique
+        - not_null
+        meta:
+            column_type: INTEGER
+    -   name: CampaignID
+        tests:
+        - not_null
+        meta:
+            column_type: INTEGER
+    -   name: Name
+        tests:
+        - not_null
+        meta:
+            column_type: VARCHAR(255)
+    -   name: CampaignType
+        tests:
+        - not_null
+        meta:
+            column_type: VARCHAR(50)
+    -   name: Objective
+        
+        meta:
+            column_type: VARCHAR(1000)
+    -   name: TargetAudience
+        
+        meta:
+            column_type: VARCHAR(100)
+    -   name: ConversionGoal
+        
+        meta:
+            column_type: VARCHAR(255)
+    -   name: StartDate
+        tests:
+        - not_null
+        meta:
+            column_type: DATE
+    -   name: EndDate
+        tests:
+        - not_null
+        meta:
+            column_type: DATE
+    -   name: Budget
+        tests:
+        - not_null
+        meta:
+            column_type: DECIMAL(18, 2)
+    -   name: SCDStartDate
+        
+        meta:
+            column_type: TIMESTAMP
+    -   name: SCDEndDate
+        
+        meta:
+            column_type: TIMESTAMP
+    -   name: SCDIsCurrent
+        
+        meta:
+            column_type: BOOLEAN

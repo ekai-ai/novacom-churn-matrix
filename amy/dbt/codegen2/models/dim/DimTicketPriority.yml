@@ -1,0 +1,17 @@
+version: 2
+models:
+-   name: DimTicketPriority
+    description: Reference dimension for support ticket priorities.
+    columns:
+    -   name: TicketPrioritySK
+        tests:
+        - unique
+        - not_null
+        meta:
+            column_type: INTEGER
+    -   name: TicketPriorityName
+        tests:
+        - unique
+        - not_null
+        meta:
+            column_type: VARCHAR(50)

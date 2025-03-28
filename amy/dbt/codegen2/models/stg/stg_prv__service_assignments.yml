@@ -1,0 +1,56 @@
+version: 2
+models:
+-   name: stg_prv__service_assignments
+    description: 'Staging table for PRV_SERVICE_ASSIGNMENTS used for ML training dataset
+        generation. This model includes all original columns from the source table
+        and an engineered ''Label'' column to indicate churn status (0 for active,
+        1 for churned). Note: No PII is included.'
+    columns:
+    -   name: ASSIGNMENT_ID
+        
+        meta:
+            column_type: int
+    -   name: SERVICE_ID
+        
+        meta:
+            column_type: int
+    -   name: CUSTOMER_ID
+        
+        meta:
+            column_type: int
+    -   name: START_DATE
+        
+        meta:
+            column_type: date
+    -   name: END_DATE
+        
+        meta:
+            column_type: date
+    -   name: STATUS
+        
+        meta:
+            column_type: varchar
+    -   name: PROVISIONING_STATUS
+        
+        meta:
+            column_type: varchar
+    -   name: LAST_MODIFIED_DATE
+        
+        meta:
+            column_type: varchar
+    -   name: NOTE
+        
+        meta:
+            column_type: varchar
+    -   name: CREATED_AT
+        
+        meta:
+            column_type: varchar
+    -   name: UPDATED_AT
+        
+        meta:
+            column_type: varchar
+    -   name: Label
+        
+        meta:
+            column_type: integer

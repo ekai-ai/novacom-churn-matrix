@@ -1,0 +1,59 @@
+version: 2
+models:
+-   name: stg_nwk__equipment
+    description: Staging table for NWK_EQUIPMENT data from raw source. This table
+        is used to prepare and transform the raw NWK_EQUIPMENT data for downstream
+        modeling and ML use cases without renaming any columns.
+    columns:
+    -   name: EQUIPMENT_ID
+        
+        meta:
+            column_type: int
+    -   name: ASSIGNMENT_ID
+        
+        meta:
+            column_type: int
+    -   name: EQUIPMENT_TYPE
+        
+        meta:
+            column_type: varchar
+    -   name: MODEL
+        
+        meta:
+            column_type: varchar
+    -   name: SERIAL_NUMBER
+        
+        meta:
+            column_type: varchar
+    -   name: FIRMWARE_VERSION
+        
+        meta:
+            column_type: varchar
+    -   name: IP_ADDRESS
+        
+        meta:
+            column_type: varchar
+    -   name: MAC_ADDRESS
+        
+        meta:
+            column_type: varchar
+    -   name: LOCATION
+        
+        meta:
+            column_type: varchar
+    -   name: STATUS
+        
+        meta:
+            column_type: varchar
+    -   name: LAST_MAINTENANCE_DATE
+        
+        meta:
+            column_type: date
+    -   name: CREATED_AT
+        
+        meta:
+            column_type: varchar
+    -   name: UPDATED_AT
+        
+        meta:
+            column_type: varchar

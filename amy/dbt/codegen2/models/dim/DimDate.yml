@@ -1,0 +1,76 @@
+version: 2
+models:
+-   name: DimDate
+    description: Standard calendar dimension for analyzing trends over time.
+    columns:
+    -   name: DateSK
+        tests:
+        - unique
+        - not_null
+        meta:
+            column_type: INTEGER
+    -   name: Date
+        tests:
+        - not_null
+        meta:
+            column_type: DATE
+    -   name: DayOfWeek
+        tests:
+        - not_null
+        meta:
+            column_type: VARCHAR(10)
+    -   name: DayOfMonth
+        tests:
+        - not_null
+        meta:
+            column_type: INTEGER
+    -   name: DayOfYear
+        tests:
+        - not_null
+        meta:
+            column_type: INTEGER
+    -   name: WeekOfYear
+        tests:
+        - not_null
+        meta:
+            column_type: INTEGER
+    -   name: Month
+        tests:
+        - not_null
+        meta:
+            column_type: INTEGER
+    -   name: MonthName
+        tests:
+        - not_null
+        meta:
+            column_type: VARCHAR(10)
+    -   name: Quarter
+        tests:
+        - not_null
+        meta:
+            column_type: INTEGER
+    -   name: Year
+        tests:
+        - not_null
+        meta:
+            column_type: INTEGER
+    -   name: IsWeekend
+        tests:
+        - not_null
+        meta:
+            column_type: BOOLEAN
+    -   name: IsMonthEnd
+        tests:
+        - not_null
+        meta:
+            column_type: BOOLEAN
+    -   name: IsQuarterEnd
+        tests:
+        - not_null
+        meta:
+            column_type: BOOLEAN
+    -   name: IsYearEnd
+        tests:
+        - not_null
+        meta:
+            column_type: BOOLEAN

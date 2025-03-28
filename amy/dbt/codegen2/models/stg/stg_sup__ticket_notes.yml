@@ -1,0 +1,42 @@
+version: 2
+models:
+-   name: stg_sup__ticket_notes
+    description: Staging model for support ticket notes. Stores notes associated with
+        support tickets, including author, content, and timestamps for creation and
+        updates.
+    columns:
+    -   name: NOTE_ID
+        tests:
+        - not_null
+        - unique
+        meta:
+            column_type: int
+    -   name: TICKET_ID
+        tests:
+        - not_null
+        meta:
+            column_type: int
+    -   name: NOTE_DATE
+        
+        meta:
+            column_type: varchar
+    -   name: NOTE_AUTHOR
+        
+        meta:
+            column_type: varchar
+    -   name: NOTE_TEXT
+        
+        meta:
+            column_type: varchar
+    -   name: INTERNAL_FLAG
+        
+        meta:
+            column_type: boolean
+    -   name: CREATED_AT
+        
+        meta:
+            column_type: varchar
+    -   name: UPDATED_AT
+        
+        meta:
+            column_type: varchar

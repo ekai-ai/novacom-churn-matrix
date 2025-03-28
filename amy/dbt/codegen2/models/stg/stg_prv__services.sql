@@ -1,0 +1,26 @@
+WITH source AS (
+    SELECT
+        SERVICE_ID,
+        SERVICE_NAME,
+        SERVICE_TYPE,
+        DESCRIPTION,
+        MONTHLY_COST,
+        ACTIVE_FLAG,
+        PROVISIONING_TEAM,
+        CREATED_DATE,
+        UPDATED_AT
+    FROM
+        {{ source('raw', 'PRV_SERVICES') }}
+)
+SELECT
+    SERVICE_ID,
+    SERVICE_NAME,
+    SERVICE_TYPE,
+    DESCRIPTION,
+    MONTHLY_COST,
+    ACTIVE_FLAG,
+    PROVISIONING_TEAM,
+    CREATED_DATE,
+    UPDATED_AT
+FROM
+    source

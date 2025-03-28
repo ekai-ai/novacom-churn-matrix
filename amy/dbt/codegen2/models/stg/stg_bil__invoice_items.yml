@@ -1,0 +1,56 @@
+version: 2
+models:
+-   name: stg_bil__invoice_items
+    description: Staging model for invoice items. Stores detailed records of each
+        invoice item including product-specific line items, descriptions, quantities,
+        pricing details, applicable tax and discount rates, and timestamps for record
+        creation and updates.
+    columns:
+    -   name: ITEM_ID
+        tests:
+        - not_null
+        meta:
+            column_type: integer
+    -   name: INVOICE_ID
+        tests:
+        - not_null
+        meta:
+            column_type: integer
+    -   name: ITEM_CODE
+        tests:
+        - not_null
+        - unique
+        meta:
+            column_type: string
+    -   name: DESCRIPTION
+        
+        meta:
+            column_type: string
+    -   name: QUANTITY
+        
+        meta:
+            column_type: integer
+    -   name: UNIT_PRICE
+        
+        meta:
+            column_type: numeric
+    -   name: TAX_RATE
+        
+        meta:
+            column_type: numeric
+    -   name: DISCOUNT_RATE
+        
+        meta:
+            column_type: numeric
+    -   name: LINE_TOTAL
+        
+        meta:
+            column_type: numeric
+    -   name: CREATED_AT
+        
+        meta:
+            column_type: timestamp
+    -   name: UPDATED_AT
+        
+        meta:
+            column_type: timestamp

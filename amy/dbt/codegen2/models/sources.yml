@@ -1,0 +1,892 @@
+version: 2
+sources:
+- name: raw
+  description: ''
+  database: NOVACOM
+  schema: BRONZE
+  tables:
+  - name: BIL_INVOICES
+    description: ''
+    columns:
+    - name: INVOICE_ID
+      description: pk, "Unique identifier for each invoice. Serves as the primary
+        key."
+      tests:
+      - unique
+      - not_null
+    - name: CUSTOMER_ID
+      description: '"Identifier for the customer associated with the invoice. Acts
+        as a foreign key to the customer record."'
+    - name: INVOICE_DATE
+      description: '"The date when the invoice was issued."'
+    - name: DUE_DATE
+      description: '"The due date by which payment should be made."'
+    - name: TOTAL_AMOUNT
+      description: '"The total monetary amount of the invoice."'
+    - name: TAX_AMOUNT
+      description: '"The tax amount applied to the invoice."'
+    - name: DISCOUNT_AMOUNT
+      description: '"The discount amount applied to the invoice."'
+    - name: CURRENCY_CODE
+      description: '"The currency code used for the invoice amounts (e.g., EUR, GBP,
+        CAD)."'
+    - name: STATUS
+      description: '"Represents the current payment status of the invoice (such as
+        Unpaid or Overdue)."'
+    - name: NOTE
+      description: '"Additional notes or remarks related to the invoice."'
+    - name: CREATED_AT
+      description: '"The timestamp when the invoice record was initially created."'
+    - name: UPDATED_AT
+      description: '"The timestamp when the invoice record was last updated."'
+    - name: invoice
+      description: ''
+    - name: with
+      description: ''
+    - name: details
+      description: ''
+    - name: This
+      description: ''
+    - name: stores
+      description: ''
+    - name: such
+      description: ''
+    - name: invoice
+      description: ''
+    - name: due
+      description: ''
+    - name: and
+      description: ''
+    - name: The
+      description: ''
+    - name: key
+      description: ''
+    - name: INVOICE_ID
+      description: ''
+    - name: CUSTOMER_ID
+      description: ''
+    - name: used
+      description: ''
+    - name: a
+      description: ''
+    - name: key
+      description: ''
+    - name: to
+      description: ''
+    - name: customer
+      description: ''
+  - name: BIL_INVOICE_ITEMS
+    description: ''
+    columns:
+    - name: ITEM_ID
+      description: '"Numeric identifier for the invoice item record, potentially part
+        of a composite primary key."'
+    - name: INVOICE_ID
+      description: '"Foreign key linking this item to its corresponding invoice record."'
+    - name: ITEM_CODE
+      description: pk, "Unique alphanumeric code identifying the product associated
+        with this invoice item."
+      tests:
+      - unique
+      - not_null
+    - name: DESCRIPTION
+      description: '"Text description providing details about the product or service
+        listed on the invoice."'
+    - name: QUANTITY
+      description: '"Numeric value representing the number of units for this invoice
+        item."'
+    - name: UNIT_PRICE
+      description: '"Decimal value representing the price per unit of the product."'
+    - name: TAX_RATE
+      description: '"Decimal value indicating the tax rate applied to the invoice
+        item."'
+    - name: DISCOUNT_RATE
+      description: '"Decimal value representing the discount rate applied to this
+        invoice item, if any."'
+    - name: LINE_TOTAL
+      description: '"Decimal value representing the total calculated for the invoice
+        line item after adjustments."'
+    - name: CREATED_AT
+      description: '"Datetime indicating when the invoice item record was created."'
+    - name: UPDATED_AT
+      description: '"Datetime indicating the last time the invoice item record was
+        updated."'
+    - name: detailed
+      description: ''
+    - name: of
+      description: ''
+    - name: invoice
+      description: ''
+    - name: This
+      description: ''
+    - name: records
+      description: ''
+    - name: line
+      description: ''
+    - name: including
+      description: ''
+    - name: pricing
+      description: ''
+    - name: applicable
+      description: ''
+    - name: and
+      description: ''
+    - name: and
+      description: ''
+    - name: for
+      description: ''
+    - name: creation
+      description: ''
+  - name: BIL_PAYMENTS
+    description: ''
+    columns:
+    - name: PAYMENT_ID
+      description: pk, "A unique numeric identifier for each payment transaction.
+        Serves as the primary key for this table."
+      tests:
+      - unique
+      - not_null
+    - name: INVOICE_ID
+      description: '"Identifier linking the payment to a specific invoice. Likely
+        a foreign key referencing an invoice record."'
+    - name: PAYMENT_DATE
+      description: '"The date when the payment was processed."'
+    - name: AMOUNT
+      description: '"The monetary value of the payment, recorded as a decimal with
+        two decimal places."'
+    - name: PAYMENT_METHOD
+      description: '"The method used to execute the payment (e.g., Credit Card, Wire,
+        ACH, or Check)."'
+    - name: TRANSACTION_ID
+      description: '"A unique string identifier for the payment transaction, ensuring
+        each entry can be distinctly tracked."'
+    - name: CURRENCY_CODE
+      description: '"A three-character code representing the currency in which the
+        payment was made (e.g., CAD, EUR)."'
+    - name: NOTE
+      description: '"A textual note providing additional details or comments about
+        the payment."'
+    - name: CREATED_AT
+      description: '"Timestamp indicating when the payment record was created in the
+        system."'
+    - name: UPDATED_AT
+      description: '"Timestamp indicating the most recent update to the payment record."'
+    - name: payment
+      description: ''
+    - name: with
+      description: ''
+    - name: linking
+      description: ''
+    - name: to
+      description: ''
+    - name: This
+      description: ''
+    - name: captures
+      description: ''
+    - name: transactions
+      description: ''
+    - name: and
+      description: ''
+    - name: supporting
+      description: ''
+    - name: tracking
+      description: ''
+  - name: CRM_ACCOUNTS
+    description: ''
+    columns:
+    - name: ACCOUNT_ID
+      description: pk, "Primary key and unique identifier for each account record."
+      tests:
+      - unique
+      - not_null
+    - name: CUSTOMER_ID
+      description: '"References the customer owning the account; this serves as a
+        foreign key linking to customer records."'
+    - name: ACCOUNT_TYPE
+      description: '"Specifies the type of account (e.g., `Business`)."'
+    - name: CREATION_DATE
+      description: '"Date when the account was originally created."'
+    - name: STATUS
+      description: '"Indicates the current status of the account (e.g., `Open` or
+        `Closed`)."'
+    - name: CURRENCY_CODE
+      description: '"The three-letter currency code used for account transactions
+        (e.g., USD, GBP, CAD, EUR)."'
+    - name: BILLING_ADDRESS
+      description: '"Contains the billing address details associated with the account."'
+    - name: SHIPPING_ADDRESS
+      description: '"Contains the shipping address details associated with the account."'
+    - name: ACCOUNT_BALANCE
+      description: '"Represents the monetary balance of the account, stored with two
+        decimal places."'
+    - name: NOTE
+      description: '"Additional free-text notes related to the account. Although unique,
+        it serves as supplementary information."'
+    - name: CREATED_AT
+      description: '"Timestamp indicating when the account record was created in the
+        system."'
+    - name: UPDATED_AT
+      description: '"Timestamp indicating the last update made to the account record."'
+    - name: table
+      description: ''
+    - name: detailed
+      description: ''
+    - name: information
+      description: ''
+    - name: including
+      description: ''
+    - name: and
+      description: ''
+    - name: It
+      description: ''
+    - name: a
+      description: ''
+    - name: component
+      description: ''
+    - name: managing
+      description: ''
+    - name: financial
+      description: ''
+  - name: CRM_CONTACTS
+    description: ''
+    columns:
+    - name: CONTACT_ID
+      description: pk, "Identifier for the contact record. Although not strictly unique,
+        it distinguishes individual contact entries."
+      tests:
+      - unique
+      - not_null
+    - name: CUSTOMER_ID
+      description: '"Foreign key referencing a customer record. Associates the contact
+        with a specific customer."'
+    - name: CONTACT_TYPE
+      description: '"Specifies the type of contact, such as Sales or Billing."'
+    - name: CONTACT_VALUE
+      description: '"Contains the contact information detail such as an email address
+        or a phone number."'
+    - name: IS_PRIMARY
+      description: '"Indicates whether the contact information is the primary contact
+        method."'
+    - name: CONTACT_LABEL
+      description: '"Optional label offering additional context like Work, Home, or
+        Mobile. May contain null values."'
+    - name: NOTE
+      description: '"Additional notes or comments about the contact record."'
+    - name: CREATED_AT
+      description: '"Timestamp marking when the contact record was created. Useful
+        for tracking record history."'
+    - name: UPDATED_AT
+      description: '"Timestamp marking the latest update to the contact record. Useful
+        for auditing changes."'
+    - name: customer
+      description: ''
+    - name: including
+      description: ''
+    - name: and
+      description: ''
+    - name: Links
+      description: ''
+    - name: contact
+      description: ''
+    - name: a
+      description: ''
+    - name: via
+      description: ''
+  - name: CRM_CUSTOMERS
+    description: ''
+    columns:
+    - name: CUSTOMER_ID
+      description: pk, "Unique identifier for each customer. Serves as the primary
+        key for the table."
+      tests:
+      - unique
+      - not_null
+    - name: FIRST_NAME
+      description: '"The first name of the customer."'
+    - name: MIDDLE_NAME
+      description: '"The middle name of the customer, if provided. This field is nullable."'
+    - name: LAST_NAME
+      description: '"The last name of the customer. Some entries may be missing."'
+    - name: EMAIL
+      description: '"The email address of the customer used for communication."'
+    - name: PHONE
+      description: '"Customer phone number, uniquely identifying the contact detail."'
+    - name: DATE_OF_BIRTH
+      description: '"The birth date of the customer."'
+    - name: ADDRESS_LINE1
+      description: '"Primary address field containing street and building information."'
+    - name: ADDRESS_LINE2
+      description: '"Secondary address information such as suite or apartment number;
+        this field is nullable."'
+    - name: CITY
+      description: '"City of the customer`s residence."'
+    - name: STATE
+      description: '"State of the customer`s residence."'
+    - name: ZIP_CODE
+      description: '"Postal code for the customer`s address."'
+    - name: COUNTRY
+      description: '"Country of the customer, currently set to `USA`."'
+    - name: CUSTOMER_SEGMENT
+      description: '"Segmentation category for the customer, used for targeted marketing
+        (e.g., Consumer)."'
+    - name: CUSTOMER_TIER
+      description: '"Indicates the customer tier (e.g., Silver, Bronze) based on their
+        value."'
+    - name: START_DATE
+      description: '"The date when the customer record became active or was registered."'
+    - name: STATUS
+      description: '"Indicates whether the customer`s status is Active or Inactive."'
+    - name: NOTE
+      description: '"Additional notes or comments about the customer. Contains extended
+        text details."'
+    - name: CREATED_AT
+      description: '"Timestamp recording when the customer record was created."'
+    - name: UPDATED_AT
+      description: '"Timestamp recording the most recent update to the customer record."'
+    - name: table
+      description: ''
+    - name: detailed
+      description: ''
+    - name: about
+      description: ''
+    - name: in
+      description: ''
+    - name: CRM
+      description: ''
+    - name: including
+      description: ''
+    - name: contact
+      description: ''
+    - name: and
+      description: ''
+  - name: CRM_OPPORTUNITIES
+    description: ''
+    columns:
+    - name: OPPORTUNITY_ID
+      description: pk, "Unique identifier for each sales opportunity. Serves as the
+        primary key."
+      tests:
+      - unique
+      - not_null
+    - name: ACCOUNT_ID
+      description: '"Identifier linking the opportunity to its associated account.
+        Acts as a foreign key."'
+    - name: STAGE
+      description: '"Current sales stage of the opportunity, indicating its progress
+        in the sales cycle."'
+    - name: PIPELINE_STAGE
+      description: '"Phase in the sales pipeline representing the opportunity`s progression."'
+    - name: AMOUNT
+      description: '"Monetary value of the opportunity deal, expressed with two decimal
+        precision."'
+    - name: PROBABILITY_OF_CLOSE
+      description: '"Estimated probability (as a percentage) that the opportunity
+        will close successfully."'
+    - name: CLOSE_DATE
+      description: '"Date when the opportunity is expected to or has closed."'
+    - name: ASSIGNED_SALES_REP
+      description: '"Name of the sales representative assigned to manage the opportunity."'
+    - name: NEXT_STEP
+      description: '"Describes the next action or follow-up activity planned for the
+        opportunity."'
+    - name: NOTE
+      description: '"Additional comments or notes providing context about the opportunity."'
+    - name: CREATED_AT
+      description: '"Timestamp indicating when the opportunity record was created."'
+    - name: UPDATED_AT
+      description: '"Timestamp indicating the last update made to the opportunity
+        record."'
+    - name: detailed
+      description: ''
+    - name: opportunity
+      description: ''
+    - name: including
+      description: ''
+    - name: account
+      description: ''
+    - name: sales
+      description: ''
+    - name: financial
+      description: ''
+    - name: and
+      description: ''
+    - name: for
+      description: ''
+    - name: progress
+      description: ''
+  - name: MKT_CAMPAIGNS
+    description: ''
+    columns:
+    - name: CAMPAIGN_ID
+      description: pk, "Unique identifier for the marketing campaign. Serves as the
+        primary key."
+      tests:
+      - unique
+      - not_null
+    - name: NAME
+      description: '"Unique name of the campaign used for identification and reference."'
+    - name: CAMPAIGN_TYPE
+      description: '"Specifies the medium or format of the campaign (e.g., Email,
+        Webinar, Event)."'
+    - name: OBJECTIVE
+      description: '"Describes the main objective and messaging focus of the campaign."'
+    - name: TARGET_AUDIENCE
+      description: '"Indicates the intended audience for the campaign, such as Enterprise,
+        SMB, or Mixed."'
+    - name: CONVERSION_GOAL
+      description: '"Details the primary conversion or action goal set for the campaign."'
+    - name: START_DATE
+      description: '"Start date for when the campaign becomes active."'
+    - name: END_DATE
+      description: '"End date for the campaign, indicating its scheduled conclusion."'
+    - name: BUDGET
+      description: '"Allocated budget for the campaign, stored as a decimal value."'
+    - name: CREATED_AT
+      description: '"Timestamp recording when the campaign record was created."'
+    - name: UPDATED_AT
+      description: '"Timestamp indicating the last time the campaign record was updated."'
+    - name: marketing
+      description: ''
+    - name: information
+      description: ''
+    - name: identification
+      description: ''
+    - name: campaign
+      description: ''
+    - name: target
+      description: ''
+    - name: and
+      description: ''
+  - name: MKT_CAMPAIGN_TARGETS
+    description: ''
+    columns:
+    - name: TARGET_ID
+      description: pk, "Unique identifier for each campaign target record. Serves
+        as the primary key."
+      tests:
+      - unique
+      - not_null
+    - name: CAMPAIGN_ID
+      description: '"Identifier for the marketing campaign. Likely acts as a foreign
+        key linking to the campaign details."'
+    - name: CUSTOMER_ID
+      description: '"Identifier for the customer targeted in the campaign. Likely
+        acts as a foreign key linking to the customer profile."'
+    - name: ASSIGNED_DATE
+      description: '"Date when the customer was assigned to the marketing campaign."'
+    - name: STATUS
+      description: '"Current status of the campaign target such as Rejected, Pending,
+        or Engaged."'
+    - name: LAST_CONTACT_DATE
+      description: '"Most recent date on which the customer was contacted as part
+        of the campaign."'
+    - name: CHANNEL
+      description: '"Communication channel used to reach the customer (e.g., Email,
+        Mail, SMS)."'
+    - name: RESPONSE_FLAG
+      description: '"Indicator showing whether the customer responded to the campaign,
+        represented as a Boolean value."'
+    - name: CREATED_AT
+      description: '"Timestamp indicating when the record was created. This field
+        is unique per record."'
+    - name: UPDATED_AT
+      description: '"Timestamp indicating when the record was last updated. This field
+        is unique per record."'
+    - name: records
+      description: ''
+    - name: link
+      description: ''
+    - name: to
+      description: ''
+    - name: including
+      description: ''
+    - name: communication
+      description: ''
+    - name: and
+      description: ''
+  - name: NWK_EQUIPMENT
+    description: ''
+    columns:
+    - name: EQUIPMENT_ID
+      description: pk, "Unique identifier for each piece of equipment; acts as the
+        primary key for the table."
+      tests:
+      - unique
+      - not_null
+    - name: ASSIGNMENT_ID
+      description: '"Identifier linking the equipment to an assignment record; may
+        serve as a foreign key in related tables."'
+    - name: EQUIPMENT_TYPE
+      description: '"Categorical type of the equipment (e.g., Router, Modem, Switch)."'
+    - name: MODEL
+      description: '"Model identifier of the equipment indicating its design or version."'
+    - name: SERIAL_NUMBER
+      description: '"Unique serial number of the equipment, ensuring distinct identification
+        apart from the primary key."'
+    - name: FIRMWARE_VERSION
+      description: '"Firmware version currently installed on the equipment."'
+    - name: IP_ADDRESS
+      description: '"Network IP address assigned to the equipment; must be unique
+        for management purposes."'
+    - name: MAC_ADDRESS
+      description: '"Hardware address of the equipment`s network interface."'
+    - name: LOCATION
+      description: '"Physical location or address of the equipment; uniquely identifies
+        placement."'
+    - name: STATUS
+      description: '"Operational status of the equipment such as Active, In Repair,
+        or Retired."'
+    - name: LAST_MAINTENANCE_DATE
+      description: '"Date when the equipment last underwent maintenance."'
+    - name: CREATED_AT
+      description: '"Timestamp indicating when the equipment record was created."'
+    - name: UPDATED_AT
+      description: '"Timestamp indicating the last update made to the equipment record."'
+    - name: detailed
+      description: ''
+    - name: of
+      description: ''
+    - name: equipment
+      description: ''
+    - name: associated
+      description: ''
+    - name: used
+      description: ''
+    - name: time
+      description: ''
+    - name: analysis
+      description: ''
+    - name: tracking
+      description: ''
+    - name: status
+      description: ''
+  - name: NWK_OUTAGES
+    description: ''
+    columns:
+    - name: OUTAGE_ID
+      description: pk, "A unique identifier for each outage event. Likely used as
+        the primary key."
+      tests:
+      - unique
+      - not_null
+    - name: ASSIGNMENT_ID
+      description: '"Identifier linking the outage to a specific assignment. It may
+        serve as a foreign key to an assignment table."'
+    - name: START_TIME
+      description: '"The timestamp representing when the outage event began."'
+    - name: END_TIME
+      description: '"The timestamp indicating when the outage event ended."'
+    - name: OUTAGE_TYPE
+      description: '"Specifies the type of outage (e.g., `Unplanned`)."'
+    - name: REGION
+      description: '"The geographical region where the outage occurred."'
+    - name: IMPACTED_CUSTOMERS_COUNT
+      description: '"The number of customers affected by the outage."'
+    - name: CAUSE
+      description: '"A textual description of the event`s cause leading to the outage."'
+    - name: RESOLUTION
+      description: '"Details on how the outage was resolved. Each record maintains
+        a unique resolution description."'
+    - name: CREATED_AT
+      description: '"The timestamp when the outage record was first created in the
+        system."'
+    - name: UPDATED_AT
+      description: '"The timestamp of the most recent update to the outage record."'
+    - name: table
+      description: ''
+    - name: detailed
+      description: ''
+    - name: of
+      description: ''
+    - name: outage
+      description: ''
+    - name: including
+      description: ''
+    - name: customer
+      description: ''
+    - name: and
+      description: ''
+  - name: NWK_USAGE
+    description: ''
+    columns:
+    - name: USAGE_ID
+      description: pk, "Unique identifier for each network usage record. Acts as the
+        primary key."
+      tests:
+      - unique
+      - not_null
+    - name: ASSIGNMENT_ID
+      description: '"Identifier linking the usage record to an assignment. Likely
+        a foreign key connecting to an assignments table."'
+    - name: USAGE_DATE
+      description: '"The date on which the network usage was recorded."'
+    - name: USAGE_TYPE
+      description: '"Type of network usage (e.g., Download, Upload, Total)."'
+    - name: DATA_CONSUMED
+      description: '"The amount of data consumed, represented with two decimal precision."'
+    - name: USAGE_UNIT
+      description: '"Unit of measurement for the consumed data (e.g., GB)."'
+    - name: USAGE_PEAK
+      description: '"The peak network usage value during the recorded period."'
+    - name: USAGE_COST
+      description: '"Cost associated with the recorded network usage."'
+    - name: CREATED_AT
+      description: '"Timestamp marking when the record was created."'
+    - name: UPDATED_AT
+      description: '"Timestamp indicating the last update to the record."'
+    - name: network
+      description: ''
+    - name: records
+      description: ''
+    - name: data
+      description: ''
+    - name: usage
+      description: ''
+    - name: peak
+      description: ''
+    - name: and
+      description: ''
+    - name: cost
+      description: ''
+    - name: over
+      description: ''
+  - name: PRV_SERVICES
+    description: ''
+    columns:
+    - name: SERVICE_ID
+      description: pk, "Unique numeric identifier for each service. Serves as the
+        primary key."
+      tests:
+      - unique
+      - not_null
+    - name: SERVICE_NAME
+      description: '"Unique name assigned to the service, following a specific naming
+        convention."'
+    - name: SERVICE_TYPE
+      description: '"Category of the service, typically one of the predefined types
+        (e.g., Cloud, Internet, Voice)."'
+    - name: DESCRIPTION
+      description: '"Detailed description providing additional context and information
+        about the service."'
+    - name: MONTHLY_COST
+      description: '"Monetary cost of the service on a monthly basis, stored as a
+        decimal with two decimal places."'
+    - name: ACTIVE_FLAG
+      description: '"Boolean indicator that shows whether the service is currently
+        active."'
+    - name: PROVISIONING_TEAM
+      description: '"Identifier for the team responsible for provisioning or managing
+        the service."'
+    - name: CREATED_DATE
+      description: '"The date when the service record was initially created."'
+    - name: UPDATED_AT
+      description: '"Timestamp indicating the last time the service record was updated."'
+    - name: information
+      description: ''
+    - name: various
+      description: ''
+    - name: detailing
+      description: ''
+    - name: provisioning
+      description: ''
+    - name: and
+      description: ''
+    - name: for
+      description: ''
+    - name: and
+      description: ''
+  - name: PRV_SERVICE_ASSIGNMENTS
+    description: ''
+    columns:
+    - name: ASSIGNMENT_ID
+      description: pk, "Unique identifier for the service assignment. Acts as the
+        primary key."
+      tests:
+      - unique
+      - not_null
+    - name: SERVICE_ID
+      description: '"Identifier for the service being assigned. Likely a foreign key
+        to the services table."'
+    - name: CUSTOMER_ID
+      description: '"Identifier for the customer receiving the service. Likely a foreign
+        key to the customers table."'
+    - name: START_DATE
+      description: '"Date when the service assignment begins."'
+    - name: END_DATE
+      description: '"Date when the service assignment ends. A null value indicates
+        an ongoing assignment."'
+    - name: STATUS
+      description: '"Current status of the assignment (e.g., Active)."'
+    - name: PROVISIONING_STATUS
+      description: '"Provisioning status of the service assignment (e.g., Completed,
+        Pending, InProgress, Delayed)."'
+    - name: LAST_MODIFIED_DATE
+      description: '"Timestamp when the record was last modified. This value is unique
+        per record."'
+    - name: NOTE
+      description: '"Additional notes or descriptive text associated with the service
+        assignment."'
+    - name: CREATED_AT
+      description: '"Timestamp when the service assignment record was created."'
+    - name: UPDATED_AT
+      description: '"Timestamp when the service assignment record was last updated."'
+    - name: assignments
+      description: ''
+    - name: services
+      description: ''
+    - name: including
+      description: ''
+    - name: and
+      description: ''
+  - name: SUP_KB_ARTICLES
+    description: ''
+    columns:
+    - name: KB_ARTICLE_ID
+      description: pk, "Primary key. A unique integer identifier for each knowledge
+        base article."
+      tests:
+      - unique
+      - not_null
+    - name: TITLE
+      description: '"Title of the article. It provides a brief and descriptive summary
+        of the article content."'
+    - name: CONTENT
+      description: '"Full text of the article. Contains the detailed content and information
+        provided in the article."'
+    - name: CATEGORY
+      description: '"Designates the grouping or subject area of the article, such
+        as Advanced, Billing, Networking, or Provisioning."'
+    - name: ARTICLE_AUTHOR
+      description: '"Name of the article author. Identifies the individual who wrote
+        or contributed to the article."'
+    - name: VERSION_NUMBER
+      description: '"Indicates the version of the article. Reflects updates or revisions
+        over time."'
+    - name: EXTERNAL_LINK
+      description: '"Optional. Contains an external URL reference related to the article
+        if available."'
+    - name: LAST_UPDATED
+      description: '"Records the date and time when the article was last updated,
+        ensuring temporal tracking."'
+    - name: CREATED_AT
+      description: '"Timestamp indicating when the article was originally created."'
+    - name: UPDATED_AT
+      description: '"Timestamp reflecting the most recent modification made to the
+        article record."'
+    - name: knowledge
+      description: ''
+    - name: articles
+      description: ''
+    - name: metadata
+      description: ''
+    - name: support
+      description: ''
+    - name: Each
+      description: ''
+    - name: represents
+      description: ''
+    - name: individual
+      description: ''
+    - name: with
+      description: ''
+    - name: and
+      description: ''
+  - name: SUP_TICKETS
+    description: ''
+    columns:
+    - name: TICKET_ID
+      description: pk, "Unique identifier for each support ticket. Primary key."
+      tests:
+      - unique
+      - not_null
+    - name: CUSTOMER_ID
+      description: '"Identifier for the customer who submitted the ticket; likely
+        a foreign key to a customer information table."'
+    - name: CREATED_DATE
+      description: '"Timestamp when the support ticket was initially created."'
+    - name: STATUS
+      description: '"Current status of the ticket (e.g., Open, Closed, On-Hold)."'
+    - name: PRIORITY
+      description: '"Priority level of the ticket (e.g., Low, High)."'
+    - name: SUBJECT
+      description: '"Brief summary or title of the support ticket; intended to be
+        unique."'
+    - name: DESCRIPTION
+      description: '"Detailed narrative describing the support issue reported on the
+        ticket."'
+    - name: CHANNEL_OF_CONTACT
+      description: '"Channel used by the customer to contact support (e.g., Phone,
+        Web)."'
+    - name: ASSIGNED_AGENT
+      description: '"Name of the support agent assigned to the ticket; may be null
+        if no assignment was made."'
+    - name: RESOLUTION_DATE
+      description: '"Timestamp when the ticket was resolved; remains null if the issue
+        is still open."'
+    - name: CREATED_AT
+      description: '"System timestamp marking when the record was created in the database."'
+    - name: UPDATED_AT
+      description: '"System timestamp for the last update made to the ticket record."'
+    - name: support
+      description: ''
+    - name: capturing
+      description: ''
+    - name: queries
+      description: ''
+    - name: their
+      description: ''
+    - name: metadata
+      description: ''
+    - name: communication
+      description: ''
+    - name: and
+      description: ''
+  - name: SUP_TICKET_NOTES
+    description: ''
+    columns:
+    - name: NOTE_ID
+      description: pk, "Unique identifier for each note. Acts as the primary key."
+      tests:
+      - unique
+      - not_null
+    - name: TICKET_ID
+      description: '"Identifier of the related support ticket. Likely a foreign key
+        referencing the support tickets table."'
+    - name: NOTE_DATE
+      description: '"The date and time when the note was recorded."'
+    - name: NOTE_AUTHOR
+      description: '"Name of the author who created the note."'
+    - name: NOTE_TEXT
+      description: '"Text content of the note describing details or comments on the
+        support ticket."'
+    - name: INTERNAL_FLAG
+      description: '"Boolean flag indicating if the note is for internal use only."'
+    - name: CREATED_AT
+      description: '"Timestamp when the note record was created."'
+    - name: UPDATED_AT
+      description: '"Timestamp when the note record was last updated. Each update
+        is uniquely tracked."'
+    - name: support
+      description: ''
+    - name: Each
+      description: ''
+    - name: represents
+      description: ''
+    - name: note
+      description: ''
+    - name: with
+      description: ''
+    - name: support
+      description: ''
+    - name: containing
+      description: ''
+    - name: such
+      description: ''
+    - name: note
+      description: ''
+    - name: and
+      description: ''
+    - name: for
+      description: ''
+    - name: and
+      description: ''

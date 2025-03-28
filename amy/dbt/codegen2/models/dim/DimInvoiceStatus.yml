@@ -1,0 +1,18 @@
+version: 2
+models:
+-   name: DimInvoiceStatus
+    description: Reference dimension for invoice statuses. Contains unique statuses
+        found in invoices.
+    columns:
+    -   name: InvoiceStatusSK
+        tests:
+        - unique
+        - not_null
+        meta:
+            column_type: VARCHAR
+    -   name: InvoiceStatusName
+        tests:
+        - unique
+        - not_null
+        meta:
+            column_type: VARCHAR(50)
