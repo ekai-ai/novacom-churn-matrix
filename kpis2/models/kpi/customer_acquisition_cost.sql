@@ -1,4 +1,4 @@
--- Customer Acquisition Cost (CAC) Model
+-- Customer Acquisition Cost (CAC) Model Code Mod
 
 with campaign_data as (
     select
