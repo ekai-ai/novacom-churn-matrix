@@ -1,0 +1,52 @@
+version: 2
+models:
+-   name: fact_ticket_notes
+    description: Fact table at the grain of each support ticket note. Joins raw SUP_TICKET_NOTES
+        to raw SUP_TICKETS to calculate first_response_hours (difference between ticket
+        creation and first note) and inter_note_interval_hours (difference between
+        consecutive notes by ticket and author). Used for visibility and response
+        time analysis on support tickets.
+    columns:
+    -   name: note_id
+        description: The unique identifier for the ticket note.
+        data_type: bigint
+        tests:
+        - unique
+        - not_null
+    -   name: ticket_id
+        description: The identifier for the ticket the note belongs to.
+        data_type: bigint
+        tests:
+        - not_null
+    -   name: note_date
+        description: The timestamp when the note was created.
+        data_type: timestamp
+        tests:
+        - not_null
+    -   name: note_author
+        description: The author of the ticket note.
+        data_type: string
+        tests:
+        - not_null
+    -   name: internal_flag
+        description: Flag indicating if the note is internal (True) or external (False).
+        data_type: boolean
+    -   name: note_text
+        description: The text content of the note.
+        data_type: string
+    -   name: created_at
+        description: The timestamp when the note record was created in the source system.
+        data_type: timestamp
+        tests:
+        - not_null
+    -   name: updated_at
+        description: The timestamp when the note record was last updated in the source system.
+        data_type: timestamp
+        tests:
+        - not_null
+    -   name: first_response_hours
+        description: The time in hours between ticket creation and the first note. Null for subsequent notes.
+        data_type: numeric
+    -   name: inter_note_interval_hours
+        description: The time in hours between this note and the previous note from the same author on the same ticket. Null for the first note by an author on a ticket.
+        data_type: numeric

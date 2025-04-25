@@ -1,0 +1,45 @@
+version: 2
+
+models:
+  - name: stg_prv_services
+    description: Staging model for provider services data. Includes basic cleaning, renaming, and type casting from the raw.prv_services source table.
+    columns:
+      - name: service_id
+        description: The unique identifier for the service.
+        tests:
+          - not_null
+          - unique
+
+      - name: service_name
+        description: The name of the service.
+        tests:
+          - not_null
+
+      - name: service_type
+        description: The type or category of the service.
+
+      - name: description
+        description: A textual description of the service.
+
+      - name: monthly_cost
+        description: The cost of the service per month.
+        tests:
+          - not_null
+
+      - name: provisioning_team
+        description: The team responsible for provisioning the service.
+
+      - name: active_flag
+        description: A flag indicating if the service is currently active (True/False).
+        tests:
+          - not_null
+
+      - name: created_date
+        description: The date when the service record was created.
+        tests:
+          - not_null
+
+      - name: updated_at
+        description: The timestamp when the service record was last updated.
+        tests:
+          - not_null

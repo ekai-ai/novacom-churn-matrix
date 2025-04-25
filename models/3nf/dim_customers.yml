@@ -1,0 +1,37 @@
+version: 2
+models:
+-   name: dim_customers
+    description: Dimension table for customers. Sourced from CRM_CUSTOMERS (DBML).
+      Enables filtering by segment/tier and mapping customer metadata to tickets
+      and notes.
+    columns:
+    -   name: customer_id
+        tests:
+        - unique
+        - not_null
+        meta:
+            column_type: int64
+    -   name: first_name
+        
+        meta:
+            column_type: string
+    -   name: last_name
+        
+        meta:
+            column_type: string
+    -   name: email
+        
+        meta:
+            column_type: string
+    -   name: customer_segment
+        
+        meta:
+            column_type: string
+    -   name: customer_tier
+        
+        meta:
+            column_type: string
+    -   name: status
+        
+        meta:
+            column_type: string

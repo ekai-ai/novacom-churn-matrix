@@ -1,0 +1,43 @@
+version: 2
+models:
+-   name: stg_sup_ticket_notes
+    description: Staging model for SUP_TICKET_NOTES (DBML). Pulls all raw fields and
+        enforces non-null NOTE_ID, NOTE_DATE, NOTE_AUTHOR. Serves as the source for
+        fact and aggregate models.
+    columns:
+    -   name: note_id
+        tests:
+        - unique
+        - not_null
+        meta:
+            column_type: int64
+    -   name: ticket_id
+        
+        meta:
+            column_type: int64
+    -   name: note_date
+        tests:
+        - not_null
+        meta:
+            column_type: datetime
+    -   name: note_author
+        tests:
+        - not_null
+        meta:
+            column_type: string
+    -   name: note_text
+        
+        meta:
+            column_type: string
+    -   name: internal_flag
+        
+        meta:
+            column_type: boolean
+    -   name: created_at
+        
+        meta:
+            column_type: datetime
+    -   name: updated_at
+        
+        meta:
+            column_type: datetime

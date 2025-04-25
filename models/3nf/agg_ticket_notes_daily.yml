@@ -1,0 +1,38 @@
+version: 2
+models:
+-   name: agg_ticket_notes_daily
+    description: Daily pre-aggregate for ticket notes trends. Summarizes counts by
+        INTERNAL_FLAG and averages response/cadence metrics from fact_ticket_notes.
+        Speeds up time-series and KPI queries as per performance requirements.
+    columns:
+    -   name: note_date
+        tests:
+        - unique
+        - not_null
+        meta:
+            column_type: date
+    -   name: total_notes
+        tests:
+        - not_null
+        meta:
+            column_type: int64
+    -   name: internal_notes
+        tests:
+        - not_null
+        meta:
+            column_type: int64
+    -   name: external_notes
+        tests:
+        - not_null
+        meta:
+            column_type: int64
+    -   name: avg_first_response_hours
+        tests:
+        - not_null
+        meta:
+            column_type: decimal(10,2)
+    -   name: avg_inter_note_interval_hours
+        tests:
+        - not_null
+        meta:
+            column_type: decimal(10,2)

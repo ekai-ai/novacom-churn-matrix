@@ -1,0 +1,46 @@
+version: 2
+models:
+-   name: dim_tickets
+    description: Dimension table for ticket-level attributes. This 3NF model normalizes
+        support ticket data by selecting and renaming core columns from the raw SUP_TICKETS
+        source. It captures ticket identifiers, creation timestamps, status, priority,
+        contact channel, assigned agent, and resolution dates. Used to enrich fact
+        tables for SLA and backlog dashboards.
+    columns:
+    -   name: ticket_id
+        tests:
+        - unique
+        - not_null
+        meta:
+            column_type: int64
+    -   name: customer_id
+        tests:
+        - not_null
+        meta:
+            column_type: int64
+    -   name: created_date
+        tests:
+        - not_null
+        meta:
+            column_type: datetime
+    -   name: status
+        tests:
+        - not_null
+        meta:
+            column_type: string
+    -   name: priority
+        tests:
+        - not_null
+        meta:
+            column_type: string
+    -   name: channel_of_contact
+        tests:
+        - not_null
+        meta:
+            column_type: string
+    -   name: assigned_agent
+        meta:
+            column_type: string
+    -   name: resolution_date
+        meta:
+            column_type: datetime

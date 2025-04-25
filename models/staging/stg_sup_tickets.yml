@@ -1,0 +1,65 @@
+version: 2
+models:
+-   name: stg_sup_tickets
+    description: "Staging model for SUP_TICKETS (DBML). Cleans and standardizes ticket\
+        \ attributes for joins\u2014used downstream for dimensions and link to notes."
+    columns:
+    -   name: ticket_id
+        tests:
+        - unique
+        - not_null
+        meta:
+            column_type: int64
+    -   name: customer_id
+        tests:
+        - not_null
+        meta:
+            column_type: int64
+    -   name: created_date
+        tests:
+        - not_null
+        meta:
+            column_type: timestamp
+    -   name: status
+        tests:
+        - not_null
+        meta:
+            column_type: string
+    -   name: priority
+        tests:
+        - not_null
+        meta:
+            column_type: string
+    -   name: subject
+        tests:
+        - not_null
+        meta:
+            column_type: string
+    -   name: description
+        tests:
+        - not_null
+        meta:
+            column_type: string
+    -   name: channel_of_contact
+        tests:
+        - not_null
+        meta:
+            column_type: string
+    -   name: assigned_agent
+        
+        meta:
+            column_type: string
+    -   name: resolution_date
+        
+        meta:
+            column_type: timestamp
+    -   name: created_at
+        tests:
+        - not_null
+        meta:
+            column_type: timestamp
+    -   name: updated_at
+        tests:
+        - not_null
+        meta:
+            column_type: timestamp
