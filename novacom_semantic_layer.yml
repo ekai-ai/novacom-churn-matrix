@@ -1,0 +1,660 @@
+version: '1'
+name: "NovacomTelecomSemanticLayer"
+description: "Semantic layer for Novacom Telecom data with dimensional model and KPIs"
+
+# Define the database connection
+connection:
+  database: NOVACOM
+  schema: SEMANTIC_LAYER
+  warehouse: COMPUTE_WH
+
+# Define entities and their relationships
+entities:
+  - name: customers
+    description: "Telecom customers and their attributes"
+    physical_name: "DimCustomer"
+    primary_key: "CustomerSK"
+    attributes:
+      - name: customer_id
+        description: "Unique identifier for a customer"
+        column: "CUSTOMER_ID"
+        type: "string"
+        
+      - name: first_name
+        description: "Customer's first name"
+        column: "FIRST_NAME"
+        type: "string"
+        
+      - name: last_name
+        description: "Customer's last name"
+        column: "LAST_NAME"
+        type: "string"
+        
+      - name: email
+        description: "Customer's email address"
+        column: "EMAIL"
+        type: "string"
+        
+      - name: phone
+        description: "Customer's phone number"
+        column: "PHONE"
+        type: "string"
+        
+      - name: address_line1
+        description: "Customer's primary address"
+        column: "ADDRESS_LINE1"
+        type: "string"
+        
+      - name: city
+        description: "Customer's city"
+        column: "CITY"
+        type: "string"
+        
+      - name: state
+        description: "Customer's state or province"
+        column: "STATE"
+        type: "string"
+        
+      - name: zip_code
+        description: "Customer's postal code"
+        column: "ZIP_CODE"
+        type: "string"
+        
+      - name: country
+        description: "Customer's country"
+        column: "COUNTRY"
+        type: "string"
+        
+      - name: customer_segment
+        description: "Customer segment (Residential, SMB, Enterprise, Government)"
+        column: "CUSTOMER_SEGMENT"
+        type: "string"
+        
+      - name: customer_tier
+        description: "Customer tier (Bronze, Silver, Gold, Platinum)"
+        column: "CUSTOMER_TIER"
+        type: "string"
+        
+      - name: start_date
+        description: "Date when customer relationship began"
+        column: "START_DATE"
+        type: "date"
+        
+      - name: status
+        description: "Customer status (Active, Inactive, Suspended, Closed)"
+        column: "STATUS"
+        type: "string"
+        
+      - name: account_type
+        description: "Type of account (Individual, Business, Government)"
+        column: "ACCOUNT_TYPE"
+        type: "string"
+        
+      - name: creation_date
+        description: "Date when the account was created"
+        column: "CREATION_DATE"
+        type: "date"
+        
+      - name: account_balance
+        description: "Current account balance"
+        column: "ACCOUNT_BALANCE"
+        type: "number"
+
+  - name: invoices
+    description: "Customer invoices for telecom services"
+    physical_name: "fact_invoice"
+    primary_key: "INVOICE_ID"
+    attributes:
+      - name: invoice_id
+        description: "Unique identifier for an invoice"
+        column: "INVOICE_ID"
+        type: "string"
+        
+      - name: customer_id
+        description: "ID of the customer associated with this invoice"
+        column: "CUSTOMER_ID"
+        type: "string"
+        
+      - name: invoice_date
+        description: "Date when the invoice was issued"
+        column: "INVOICE_DATE_KEY"
+        type: "date"
+        
+      - name: due_date
+        description: "Date when payment is due"
+        column: "DUE_DATE_KEY"
+        type: "date"
+        
+      - name: total_amount
+        description: "Total amount of the invoice"
+        column: "TOTAL_AMOUNT"
+        type: "number"
+        
+      - name: tax_amount
+        description: "Tax amount on the invoice"
+        column: "TAX_AMOUNT"
+        type: "number"
+        
+      - name: discount_amount
+        description: "Discount amount applied to the invoice"
+        column: "DISCOUNT_AMOUNT"
+        type: "number"
+        
+      - name: payment_amount
+        description: "Amount paid on the invoice"
+        column: "PAYMENT_AMOUNT"
+        type: "number"
+        
+      - name: currency_code
+        description: "Currency code for the invoice"
+        column: "CURRENCY_CODE"
+        type: "string"
+        
+      - name: status
+        description: "Invoice status (Issued, Paid, Overdue, Cancelled)"
+        column: "STATUS"
+        type: "string"
+        
+      - name: item_code
+        description: "Code for the service or product on the invoice"
+        column: "ITEM_CODE"
+        type: "string"
+        
+      - name: quantity
+        description: "Quantity of the item"
+        column: "QUANTITY"
+        type: "integer"
+        
+      - name: unit_price
+        description: "Unit price of the item"
+        column: "UNIT_PRICE"
+        type: "number"
+        
+      - name: line_total
+        description: "Total amount for the line item"
+        column: "LINE_TOTAL"
+        type: "number"
+        
+      - name: payment_date
+        description: "Date when payment was made"
+        column: "PAYMENT_DATE_KEY"
+        type: "date"
+        
+      - name: payment_method
+        description: "Method of payment"
+        column: "PAYMENT_METHOD"
+        type: "string"
+
+  - name: services
+    description: "Telecom services offered to customers"
+    physical_name: "DimService"
+    primary_key: "ServiceSK"
+    attributes:
+      - name: service_id
+        description: "Unique identifier for a service"
+        column: "SERVICE_ID"
+        type: "string"
+        
+      - name: service_name
+        description: "Name of the service"
+        column: "SERVICE_NAME"
+        type: "string"
+        
+      - name: service_type
+        description: "Type of service (Internet, TV, Mobile, etc.)"
+        column: "SERVICE_TYPE"
+        type: "string"
+        
+      - name: description
+        description: "Description of the service"
+        column: "DESCRIPTION"
+        type: "string"
+        
+      - name: active_flag
+        description: "Whether the service is active"
+        column: "ACTIVE_FLAG"
+        type: "boolean"
+
+  - name: service_assignments
+    description: "Assignment of services to customers"
+    physical_name: "FactServiceAssignment"
+    primary_key: "ASSIGNMENT_ID"
+    attributes:
+      - name: assignment_id
+        description: "Unique identifier for a service assignment"
+        column: "ASSIGNMENT_ID"
+        type: "string"
+        
+      - name: service_id
+        description: "ID of the assigned service"
+        column: "SERVICE_ID"
+        type: "string"
+        
+      - name: customer_id
+        description: "ID of the customer"
+        column: "CUSTOMER_ID"
+        type: "string"
+        
+      - name: start_date
+        description: "Date when the service started"
+        column: "START_DATE"
+        type: "date"
+        
+      - name: end_date
+        description: "Date when the service ended, if applicable"
+        column: "END_DATE"
+        type: "date"
+        
+      - name: status
+        description: "Status of the service assignment"
+        column: "STATUS"
+        type: "string"
+
+  - name: network_usage
+    description: "Network usage data for customer services"
+    physical_name: "FactNetworkUsage"
+    primary_key: "USAGE_ID"
+    attributes:
+      - name: usage_id
+        description: "Unique identifier for usage record"
+        column: "USAGE_ID"
+        type: "string"
+        
+      - name: assignment_id
+        description: "ID of the service assignment"
+        column: "ASSIGNMENT_ID"
+        type: "string"
+        
+      - name: usage_date
+        description: "Date of the usage"
+        column: "USAGE_DATE"
+        type: "date"
+        
+      - name: usage_type
+        description: "Type of usage (Data, Voice, etc.)"
+        column: "USAGE_TYPE"
+        type: "string"
+        
+      - name: data_consumed
+        description: "Amount of data consumed"
+        column: "DATA_CONSUMED"
+        type: "number"
+        
+      - name: usage_unit
+        description: "Unit of measurement for usage"
+        column: "USAGE_UNIT"
+        type: "string"
+        
+      - name: usage_cost
+        description: "Cost associated with the usage"
+        column: "USAGE_COST"
+        type: "number"
+
+  - name: support_tickets
+    description: "Customer support tickets"
+    physical_name: "FactSupportTicket"
+    primary_key: "TICKET_ID"
+    attributes:
+      - name: ticket_id
+        description: "Unique identifier for a support ticket"
+        column: "TICKET_ID" 
+        type: "string"
+        
+      - name: customer_id
+        description: "ID of the customer who submitted the ticket"
+        column: "CUSTOMER_ID"
+        type: "string"
+        
+      - name: created_date
+        description: "Date when the ticket was created"
+        column: "CREATED_DATE"
+        type: "date"
+        
+      - name: status
+        description: "Status of the ticket"
+        column: "STATUS"
+        type: "string"
+        
+      - name: priority
+        description: "Priority of the ticket"
+        column: "PRIORITY"
+        type: "string"
+        
+      - name: resolution_date
+        description: "Date when the ticket was resolved"
+        column: "RESOLUTION_DATE"
+        type: "date"
+
+  - name: campaigns
+    description: "Marketing campaigns"
+    physical_name: "DimCampaign"
+    primary_key: "CampaignSK"
+    attributes:
+      - name: campaign_id
+        description: "Unique identifier for a campaign"
+        column: "CAMPAIGN_ID"
+        type: "string"
+        
+      - name: name
+        description: "Name of the campaign"
+        column: "NAME"
+        type: "string"
+        
+      - name: campaign_type
+        description: "Type of campaign"
+        column: "CAMPAIGN_TYPE"
+        type: "string"
+        
+      - name: objective
+        description: "Objective of the campaign"
+        column: "OBJECTIVE"
+        type: "string"
+        
+      - name: start_date
+        description: "Start date of the campaign"
+        column: "START_DATE"
+        type: "date"
+        
+      - name: end_date
+        description: "End date of the campaign"
+        column: "END_DATE"
+        type: "date"
+        
+      - name: budget
+        description: "Budget allocated for the campaign"
+        column: "BUDGET"
+        type: "number"
+
+  - name: campaign_targets
+    description: "Targets of marketing campaigns"
+    physical_name: "fact_campaign_target"
+    primary_key: "TARGET_ID"
+    attributes:
+      - name: target_id
+        description: "Unique identifier for a campaign target"
+        column: "TARGET_ID"
+        type: "string"
+        
+      - name: campaign_id
+        description: "ID of the campaign"
+        column: "CAMPAIGN_ID"
+        type: "string"
+        
+      - name: customer_id
+        description: "ID of the targeted customer"
+        column: "CUSTOMER_ID"
+        type: "string"
+        
+      - name: assigned_date
+        description: "Date when the customer was assigned to the campaign"
+        column: "ASSIGNED_DATE"
+        type: "date"
+        
+      - name: channel
+        description: "Channel used to reach the customer"
+        column: "CHANNEL"
+        type: "string"
+        
+      - name: response_flag
+        description: "Whether the customer responded to the campaign"
+        column: "RESPONSE_FLAG"
+        type: "boolean"
+
+  - name: network_outages
+    description: "Network outage incidents"
+    physical_name: "FactNetworkOutage"
+    primary_key: "OUTAGE_ID"
+    attributes:
+      - name: outage_id
+        description: "Unique identifier for an outage"
+        column: "OUTAGE_ID"
+        type: "string"
+        
+      - name: assignment_id
+        description: "ID of the affected service assignment"
+        column: "ASSIGNMENT_ID"
+        type: "string"
+        
+      - name: start_time
+        description: "Start time of the outage"
+        column: "START_TIME"
+        type: "timestamp"
+        
+      - name: end_time
+        description: "End time of the outage"
+        column: "END_TIME"
+        type: "timestamp"
+        
+      - name: outage_type
+        description: "Type of outage"
+        column: "OUTAGE_TYPE"
+        type: "string"
+        
+      - name: region
+        description: "Affected region"
+        column: "REGION"
+        type: "string"
+        
+      - name: impacted_customers_count
+        description: "Number of customers impacted"
+        column: "IMPACTED_CUSTOMERS_COUNT"
+        type: "integer"
+
+# Relationships between entities
+relationships:
+  - name: customer_to_invoices
+    description: "Relationship between customers and their invoices"
+    from_entity: customers
+    to_entity: invoices
+    type: one_to_many
+    from_column: customer_id
+    to_column: customer_id
+
+  - name: customer_to_service_assignments
+    description: "Relationship between customers and their service assignments"
+    from_entity: customers
+    to_entity: service_assignments
+    type: one_to_many
+    from_column: customer_id
+    to_column: customer_id
+
+  - name: service_to_service_assignments
+    description: "Relationship between services and service assignments"
+    from_entity: services
+    to_entity: service_assignments
+    type: one_to_many
+    from_column: service_id
+    to_column: service_id
+
+  - name: service_assignment_to_network_usage
+    description: "Relationship between service assignments and network usage"
+    from_entity: service_assignments
+    to_entity: network_usage
+    type: one_to_many
+    from_column: assignment_id
+    to_column: assignment_id
+
+  - name: service_assignment_to_network_outages
+    description: "Relationship between service assignments and network outages"
+    from_entity: service_assignments
+    to_entity: network_outages
+    type: one_to_many
+    from_column: assignment_id
+    to_column: assignment_id
+
+  - name: customer_to_support_tickets
+    description: "Relationship between customers and their support tickets"
+    from_entity: customers
+    to_entity: support_tickets
+    type: one_to_many
+    from_column: customer_id
+    to_column: customer_id
+
+  - name: campaign_to_campaign_targets
+    description: "Relationship between campaigns and their targets"
+    from_entity: campaigns
+    to_entity: campaign_targets
+    type: one_to_many
+    from_column: campaign_id
+    to_column: campaign_id
+
+  - name: customer_to_campaign_targets
+    description: "Relationship between customers and campaign targets"
+    from_entity: customers
+    to_entity: campaign_targets
+    type: one_to_many
+    from_column: customer_id
+    to_column: customer_id
+
+# Define metrics/measures
+measures:
+  - name: average_revenue_per_user
+    display_name: "Average Revenue Per User (ARPU)"
+    description: "Monthly average revenue generated per customer"
+    expression: "SUM(invoices.total_amount) / COUNT(DISTINCT invoices.customer_id)"
+    format: "currency"
+    aggregation: none
+    time_grain: month
+    
+  - name: total_revenue
+    display_name: "Total Revenue"
+    description: "Sum of invoice total amounts"
+    expression: "SUM(invoices.total_amount)"
+    format: "currency"
+    
+  - name: customer_count
+    display_name: "Customer Count"
+    description: "Count of distinct customers"
+    expression: "COUNT(DISTINCT customers.customer_id)"
+    
+  - name: customer_retention_rate
+    display_name: "Customer Retention Rate"
+    description: "Percentage of customers retained over a period"
+    expression: >
+      COUNT(DISTINCT CASE WHEN service_assignments.end_date IS NULL OR 
+      service_assignments.end_date >= DATEADD(month, 1, service_assignments.start_date) 
+      THEN service_assignments.customer_id END) / 
+      NULLIF(COUNT(DISTINCT service_assignments.customer_id), 0)
+    format: "percentage"
+    time_grain: month
+    
+  - name: customer_churn_rate
+    display_name: "Customer Churn Rate"
+    description: "Percentage of customers lost over a period"
+    expression: "1 - customer_retention_rate"
+    format: "percentage"
+    time_grain: month
+    
+  - name: customer_lifetime_value
+    display_name: "Customer Lifetime Value (CLV)"
+    description: "Average revenue generated by a customer throughout their entire relationship with the company"
+    expression: >
+      SUM(invoices.total_amount) / COUNT(DISTINCT invoices.customer_id) * 
+      (1 / NULLIF(1 - customer_retention_rate, 0))
+    format: "currency"
+    
+  - name: customer_acquisition_cost
+    display_name: "Customer Acquisition Cost (CAC)"
+    description: "Average cost to acquire a new customer"
+    expression: >
+      SUM(CASE WHEN campaigns.campaign_type = 'Acquisition' THEN campaigns.budget END) / 
+      NULLIF(COUNT(DISTINCT CASE WHEN campaign_targets.response_flag = TRUE THEN campaign_targets.customer_id END), 0)
+    format: "currency"
+    
+  - name: service_adoption_rate
+    display_name: "Service Adoption Rate"
+    description: "Percentage of customers who have adopted a specific service"
+    expression: >
+      COUNT(DISTINCT service_assignments.customer_id) / 
+      NULLIF(COUNT(DISTINCT customers.customer_id), 0)
+    format: "percentage"
+    
+  - name: average_ticket_resolution_time
+    display_name: "Average Ticket Resolution Time"
+    description: "Average time to resolve a support ticket"
+    expression: >
+      AVG(DATEDIFF(day, support_tickets.created_date, support_tickets.resolution_date))
+    format: "number"
+    
+  - name: network_outage_minutes
+    display_name: "Network Outage Minutes"
+    description: "Total minutes of network outages"
+    expression: >
+      SUM(DATEDIFF(minute, network_outages.start_time, network_outages.end_time))
+    format: "number"
+    
+  - name: average_data_usage
+    display_name: "Average Data Usage"
+    description: "Average data usage per customer"
+    expression: >
+      SUM(network_usage.data_consumed) / COUNT(DISTINCT network_usage.assignment_id)
+    format: "number"
+
+# Define time dimensions for analysis
+time_dimensions:
+  - name: invoice_date
+    description: "Date of invoice"
+    expression: "invoices.invoice_date"
+    grains:
+      - day
+      - week
+      - month
+      - quarter
+      - year
+      
+  - name: customer_start_date
+    description: "Date when customer relationship began"
+    expression: "customers.start_date"
+    grains:
+      - day
+      - week
+      - month
+      - quarter
+      - year
+      
+  - name: service_start_date
+    description: "Date when service started"
+    expression: "service_assignments.start_date"
+    grains:
+      - day
+      - week
+      - month
+      - quarter
+      - year
+      
+  - name: ticket_created_date
+    description: "Date when support ticket was created"
+    expression: "support_tickets.created_date"
+    grains:
+      - day
+      - week
+      - month
+      - quarter
+      - year
+
+# Define filtered views/perspectives
+perspectives:
+  - name: active_customers
+    description: "View of active customers only"
+    base_entity: customers
+    filter: "customers.status = 'Active'"
+    
+  - name: residential_customers
+    description: "View of residential customers only"
+    base_entity: customers
+    filter: "customers.customer_segment = 'Residential'"
+    
+  - name: business_customers
+    description: "View of business customers only"
+    base_entity: customers
+    filter: "customers.customer_segment IN ('SMB', 'Enterprise')"
+    
+  - name: paid_invoices
+    description: "View of paid invoices only"
+    base_entity: invoices
+    filter: "invoices.status = 'Paid'"
+    
+  - name: high_value_customers
+    description: "View of high-value customers (Gold and Platinum tiers)"
+    base_entity: customers
+    filter: "customers.customer_tier IN ('Gold', 'Platinum')"

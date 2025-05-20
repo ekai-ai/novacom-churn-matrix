@@ -1,0 +1,788 @@
+version: '1'
+name: "NovacomTelecomDataLineage"
+description: "Data lineage for Novacom Telecom semantic layer, showing the flow from raw data sources through transformations to final entities and metrics"
+
+# Source datasets
+sources:
+  - name: raw_crm_customers
+    description: "Raw customer data from CRM system"
+    schema: "BRONZE"
+    table: "crm_customers"
+    columns:
+      - customer_id
+      - first_name
+      - middle_name
+      - last_name
+      - email
+      - phone
+      - date_of_birth
+      - address_line1
+      - address_line2
+      - city
+      - state
+      - zip_code
+      - country
+      - customer_segment
+      - customer_tier
+      - start_date
+      - status
+      - note
+      - created_at
+      - updated_at
+
+  - name: raw_crm_accounts
+    description: "Raw account data from CRM system"
+    schema: "BRONZE"
+    table: "crm_accounts"
+    columns:
+      - account_id
+      - customer_id
+      - account_type
+      - creation_date
+      - status
+      - billing_address
+      - shipping_address
+      - account_balance
+      - currency_code
+      - note
+      - created_at
+      - updated_at
+
+  - name: raw_crm_contacts
+    description: "Raw contact data from CRM system"
+    schema: "BRONZE"
+    table: "crm_contacts"
+    columns:
+      - contact_id
+      - customer_id
+      - contact_type
+      - contact_value
+      - is_primary
+      - contact_label
+      - note
+      - created_at
+      - updated_at
+
+  - name: raw_bil_invoices
+    description: "Raw invoice data from billing system"
+    schema: "BRONZE"
+    table: "bil_invoices"
+    columns:
+      - invoice_id
+      - customer_id
+      - invoice_date
+      - due_date
+      - total_amount
+      - tax_amount
+      - discount_amount
+      - currency_code
+      - status
+      - note
+      - created_at
+      - updated_at
+
+  - name: raw_bil_invoice_items
+    description: "Raw invoice line items from billing system"
+    schema: "BRONZE"
+    table: "bil_invoice_items"
+    columns:
+      - item_id
+      - invoice_id
+      - item_code
+      - description
+      - quantity
+      - unit_price
+      - tax_rate
+      - discount_rate
+      - line_total
+      - created_at
+      - updated_at
+
+  - name: raw_bil_payments
+    description: "Raw payment data from billing system"
+    schema: "BRONZE"
+    table: "bil_payments"
+    columns:
+      - payment_id
+      - invoice_id
+      - payment_date
+      - amount
+      - payment_method
+      - transaction_id
+      - currency_code
+      - note
+      - created_at
+      - updated_at
+
+  - name: raw_prv_services
+    description: "Raw services data from provisioning system"
+    schema: "BRONZE"
+    table: "prv_services"
+    columns:
+      - service_id
+      - service_name
+      - service_type
+      - description
+      - active_flag
+      - monthly_cost
+      - provisioning_team
+      - created_date
+      - updated_at
+
+  - name: raw_prv_service_assignments
+    description: "Raw service assignment data from provisioning system"
+    schema: "BRONZE"
+    table: "prv_service_assignments"
+    columns:
+      - assignment_id
+      - service_id
+      - customer_id
+      - start_date
+      - end_date
+      - status
+      - provisioning_status
+      - last_modified_date
+      - note
+      - created_at
+      - updated_at
+
+  - name: raw_nwk_equipment
+    description: "Raw network equipment data"
+    schema: "BRONZE"
+    table: "nwk_equipment"
+    columns:
+      - equipment_id
+      - assignment_id
+      - equipment_type
+      - model
+      - serial_number
+      - firmware_version
+      - ip_address
+      - mac_address
+      - location
+      - status
+      - last_maintenance_date
+      - created_at
+      - updated_at
+
+  - name: raw_nwk_usage
+    description: "Raw network usage data"
+    schema: "BRONZE"
+    table: "nwk_usage"
+    columns:
+      - usage_id
+      - assignment_id
+      - usage_date
+      - usage_type
+      - data_consumed
+      - usage_unit
+      - usage_peak
+      - usage_cost
+      - created_at
+      - updated_at
+
+  - name: raw_nwk_outages
+    description: "Raw network outage data"
+    schema: "BRONZE"
+    table: "nwk_outages"
+    columns:
+      - outage_id
+      - assignment_id
+      - start_time
+      - end_time
+      - outage_type
+      - region
+      - cause
+      - resolution
+      - impacted_customers_count
+      - created_at
+      - updated_at
+
+  - name: raw_sup_tickets
+    description: "Raw support ticket data"
+    schema: "BRONZE"
+    table: "sup_tickets"
+    columns:
+      - ticket_id
+      - customer_id
+      - created_date
+      - status
+      - priority
+      - subject
+      - description
+      - channel_of_contact
+      - assigned_agent
+      - resolution_date
+      - created_at
+      - updated_at
+
+  - name: raw_mkt_campaigns
+    description: "Raw marketing campaign data"
+    schema: "BRONZE"
+    table: "mkt_campaigns"
+    columns:
+      - campaign_id
+      - name
+      - campaign_type
+      - start_date
+      - end_date
+      - objective
+      - target_audience
+      - budget
+      - conversion_goal
+      - created_at
+      - updated_at
+
+  - name: raw_mkt_campaign_targets
+    description: "Raw campaign target data"
+    schema: "BRONZE"
+    table: "mkt_campaign_targets"
+    columns:
+      - target_id
+      - campaign_id
+      - customer_id
+      - assigned_date
+      - channel
+      - status
+      - response_flag
+      - last_contact_date
+      - created_at
+      - updated_at
+
+# Staging transformations
+transformations:
+  - name: stg_crm_customers
+    description: "Staged customer data with basic cleaning and validation"
+    type: "dbt_model"
+    materialization: "view"
+    path: "dim/models/stg/stg_crm_customers.sql"
+    inputs:
+      - raw_crm_customers
+    outputs:
+      - table: "stg_crm_customers"
+        schema: "staging"
+
+  - name: stg_crm_accounts
+    description: "Staged account data with basic cleaning and validation"
+    type: "dbt_model"
+    materialization: "view"
+    path: "dim/models/stg/stg_crm_accounts.sql"
+    inputs:
+      - raw_crm_accounts
+    outputs:
+      - table: "stg_crm_accounts"
+        schema: "staging"
+
+  - name: stg_crm_contacts
+    description: "Staged contact data with basic cleaning and validation"
+    type: "dbt_model"
+    materialization: "view"
+    path: "dim/models/stg/stg_crm_contacts.sql"
+    inputs:
+      - raw_crm_contacts
+    outputs:
+      - table: "stg_crm_contacts"
+        schema: "staging"
+
+  - name: stg_bil_invoices
+    description: "Staged invoice data with basic cleaning and validation"
+    type: "dbt_model"
+    materialization: "view"
+    path: "dim/models/stg/stg_bil_invoices.sql"
+    inputs:
+      - raw_bil_invoices
+    outputs:
+      - table: "stg_bil_invoices"
+        schema: "staging"
+
+  - name: stg_bil_invoice_items
+    description: "Staged invoice line item data with basic cleaning and validation"
+    type: "dbt_model"
+    materialization: "view"
+    path: "dim/models/stg/stg_bil_invoice_items.sql"
+    inputs:
+      - raw_bil_invoice_items
+    outputs:
+      - table: "stg_bil_invoice_items"
+        schema: "staging"
+
+  - name: stg_bil_payments
+    description: "Staged payment data with basic cleaning and validation"
+    type: "dbt_model"
+    materialization: "view"
+    path: "dim/models/stg/stg_bil_payments.sql"
+    inputs:
+      - raw_bil_payments
+    outputs:
+      - table: "stg_bil_payments"
+        schema: "staging"
+
+  - name: stg_prv_services
+    description: "Staged services data with basic cleaning and validation"
+    type: "dbt_model"
+    materialization: "view"
+    path: "dim/models/stg/stg_prv_services.sql"
+    inputs:
+      - raw_prv_services
+    outputs:
+      - table: "stg_prv_services"
+        schema: "staging"
+
+  - name: stg_prv_service_assignments
+    description: "Staged service assignment data with basic cleaning and validation"
+    type: "dbt_model"
+    materialization: "view"
+    path: "dim/models/stg/stg_prv_service_assignments.sql"
+    inputs:
+      - raw_prv_service_assignments
+    outputs:
+      - table: "stg_prv_service_assignments"
+        schema: "staging"
+
+  - name: stg_nwk_usage
+    description: "Staged network usage data with basic cleaning and validation"
+    type: "dbt_model"
+    materialization: "view"
+    path: "dim/models/stg/stg_nwk_usage.sql"
+    inputs:
+      - raw_nwk_usage
+    outputs:
+      - table: "stg_nwk_usage"
+        schema: "staging"
+
+  - name: stg_nwk_outages
+    description: "Staged network outage data with basic cleaning and validation"
+    type: "dbt_model"
+    materialization: "view"
+    path: "dim/models/stg/stg_nwk_outages.sql"
+    inputs:
+      - raw_nwk_outages
+    outputs:
+      - table: "stg_nwk_outages"
+        schema: "staging"
+
+  - name: stg_sup_tickets
+    description: "Staged support ticket data with basic cleaning and validation"
+    type: "dbt_model"
+    materialization: "view"
+    path: "dim/models/stg/stg_sup_tickets.sql"
+    inputs:
+      - raw_sup_tickets
+    outputs:
+      - table: "stg_sup_tickets"
+        schema: "staging"
+
+  - name: stg_mkt_campaigns
+    description: "Staged campaign data with basic cleaning and validation"
+    type: "dbt_model"
+    materialization: "view"
+    path: "dim/models/stg/stg_mkt_campaigns.sql"
+    inputs:
+      - raw_mkt_campaigns
+    outputs:
+      - table: "stg_mkt_campaigns"
+        schema: "staging"
+
+  - name: stg_mkt_campaign_targets
+    description: "Staged campaign target data with basic cleaning and validation"
+    type: "dbt_model"
+    materialization: "view"
+    path: "dim/models/stg/stg_mkt_campaign_targets.sql"
+    inputs:
+      - raw_mkt_campaign_targets
+    outputs:
+      - table: "stg_mkt_campaign_targets"
+        schema: "staging"
+
+# Dimensional and Fact models
+transformations:
+  - name: DimCustomer
+    description: "Customer dimension table combining customer, account, and contact information"
+    type: "dbt_model"
+    materialization: "table"
+    path: "dim/models/dim/DimCustomer.sql"
+    inputs:
+      - stg_crm_customers
+      - stg_crm_accounts
+      - stg_crm_contacts
+    outputs:
+      - table: "DimCustomer"
+        schema: "dimensions"
+
+  - name: DimService
+    description: "Service dimension table"
+    type: "dbt_model"
+    materialization: "table"
+    path: "dim/models/dim/DimService.sql"
+    inputs:
+      - stg_prv_services
+    outputs:
+      - table: "DimService"
+        schema: "dimensions"
+
+  - name: DimCampaign
+    description: "Campaign dimension table"
+    type: "dbt_model"
+    materialization: "table"
+    path: "dim/models/dim/DimCampaign.sql"
+    inputs:
+      - stg_mkt_campaigns
+    outputs:
+      - table: "DimCampaign"
+        schema: "dimensions"
+
+  - name: DimSupportTicket
+    description: "Support ticket dimension table"
+    type: "dbt_model"
+    materialization: "table"
+    path: "dim/models/dim/DimSupportTicket.sql"
+    inputs:
+      - stg_sup_tickets
+    outputs:
+      - table: "DimSupportTicket"
+        schema: "dimensions"
+
+  - name: fact_invoice
+    description: "Invoice fact table with line items and payment information"
+    type: "dbt_model"
+    materialization: "table"
+    path: "dim/models/fact/fact_invoice.sql"
+    inputs:
+      - stg_bil_invoices
+      - stg_bil_invoice_items
+      - stg_bil_payments
+    outputs:
+      - table: "fact_invoice"
+        schema: "facts"
+
+  - name: FactServiceAssignment
+    description: "Service assignment fact table"
+    type: "dbt_model"
+    materialization: "table"
+    path: "dim/models/fact/FactServiceAssignment.sql"
+    inputs:
+      - stg_prv_service_assignments
+    outputs:
+      - table: "FactServiceAssignment"
+        schema: "facts"
+
+  - name: FactNetworkUsage
+    description: "Network usage fact table"
+    type: "dbt_model"
+    materialization: "table"
+    path: "dim/models/fact/FactNetworkUsage.sql"
+    inputs:
+      - stg_nwk_usage
+    outputs:
+      - table: "FactNetworkUsage"
+        schema: "facts"
+
+  - name: FactNetworkOutage
+    description: "Network outage fact table"
+    type: "dbt_model"
+    materialization: "table"
+    path: "dim/models/fact/FactNetworkOutage.sql"
+    inputs:
+      - stg_nwk_outages
+    outputs:
+      - table: "FactNetworkOutage"
+        schema: "facts"
+
+  - name: FactSupportTicket
+    description: "Support ticket fact table"
+    type: "dbt_model"
+    materialization: "table"
+    path: "dim/models/fact/FactSupportTicket.sql"
+    inputs:
+      - stg_sup_tickets
+    outputs:
+      - table: "FactSupportTicket"
+        schema: "facts"
+
+  - name: fact_campaign_target
+    description: "Campaign target fact table"
+    type: "dbt_model"
+    materialization: "table"
+    path: "dim/models/fact/fact_campaign_target.sql"
+    inputs:
+      - stg_mkt_campaign_targets
+    outputs:
+      - table: "fact_campaign_target"
+        schema: "facts"
+
+# KPI models
+transformations:
+  - name: arpu
+    description: "Average Revenue Per User calculation"
+    type: "dbt_model"
+    materialization: "table"
+    path: "kpis2/models/kpi/arpu.sql"
+    inputs:
+      - raw_bil_invoices  # Uses source directly in the kpis2 project
+    outputs:
+      - table: "arpu"
+        schema: "kpis"
+    metrics:
+      - average_revenue_per_user
+
+  - name: customer_retention_rate
+    description: "Customer Retention Rate calculation"
+    type: "dbt_model"
+    materialization: "table"
+    path: "kpis2/models/kpi/customer_retention_rate.sql"
+    inputs:
+      - raw_prv_service_assignments  # Uses source directly in the kpis2 project
+    outputs:
+      - table: "customer_retention_rate"
+        schema: "kpis"
+    metrics:
+      - customer_retention_rate
+      - customer_churn_rate  # Derived from retention rate
+
+  - name: customer_lifetime_value
+    description: "Customer Lifetime Value calculation"
+    type: "dbt_model"
+    materialization: "table"
+    path: "kpis2/models/kpi/customer_lifetime_value.sql"
+    inputs:
+      - raw_crm_customers  # Uses source directly in the kpis2 project
+      - raw_bil_invoices   # Uses source directly in the kpis2 project
+    outputs:
+      - table: "customer_lifetime_value"
+        schema: "kpis"
+    metrics:
+      - customer_lifetime_value
+
+  - name: customer_acquisition_cost
+    description: "Customer Acquisition Cost calculation"
+    type: "dbt_model"
+    materialization: "table"
+    path: "kpis2/models/kpi/customer_acquisition_cost.sql"
+    inputs:
+      - raw_mkt_campaigns         # Uses source directly in the kpis2 project
+      - raw_mkt_campaign_targets  # Uses source directly in the kpis2 project
+    outputs:
+      - table: "customer_acquisition_cost"
+        schema: "kpis"
+    metrics:
+      - customer_acquisition_cost
+
+  - name: service_adoption_rate
+    description: "Service Adoption Rate calculation"
+    type: "dbt_model"
+    materialization: "table"
+    path: "kpis2/models/kpi/service_adoption_rate.sql"
+    inputs:
+      - raw_prv_service_assignments  # Uses source directly in the kpis2 project
+      - raw_crm_customers           # Uses source directly in the kpis2 project
+    outputs:
+      - table: "service_adoption_rate"
+        schema: "kpis"
+    metrics:
+      - service_adoption_rate
+
+# Final semantic layer entities
+semantic_entities:
+  - name: customers
+    description: "Telecom customers and their attributes"
+    source_table: "DimCustomer"
+    source_schema: "dimensions"
+    attributes:
+      - customer_id
+      - first_name
+      - last_name
+      - email
+      - phone
+      - address_line1
+      - city
+      - state
+      - zip_code
+      - country
+      - customer_segment
+      - customer_tier
+      - start_date
+      - status
+      - account_type
+      - creation_date
+      - account_balance
+
+  - name: invoices
+    description: "Customer invoices for telecom services"
+    source_table: "fact_invoice"
+    source_schema: "facts"
+    attributes:
+      - invoice_id
+      - customer_id
+      - invoice_date
+      - due_date
+      - total_amount
+      - tax_amount
+      - discount_amount
+      - payment_amount
+      - currency_code
+      - status
+      - item_code
+      - quantity
+      - unit_price
+      - line_total
+      - payment_date
+      - payment_method
+
+  - name: services
+    description: "Telecom services offered to customers"
+    source_table: "DimService"
+    source_schema: "dimensions"
+    attributes:
+      - service_id
+      - service_name
+      - service_type
+      - description
+      - active_flag
+
+  - name: service_assignments
+    description: "Assignment of services to customers"
+    source_table: "FactServiceAssignment"
+    source_schema: "facts"
+    attributes:
+      - assignment_id
+      - service_id
+      - customer_id
+      - start_date
+      - end_date
+      - status
+
+  - name: network_usage
+    description: "Network usage data for customer services"
+    source_table: "FactNetworkUsage"
+    source_schema: "facts"
+    attributes:
+      - usage_id
+      - assignment_id
+      - usage_date
+      - usage_type
+      - data_consumed
+      - usage_unit
+      - usage_cost
+
+  - name: support_tickets
+    description: "Customer support tickets"
+    source_table: "FactSupportTicket"
+    source_schema: "facts"
+    attributes:
+      - ticket_id
+      - customer_id
+      - created_date
+      - status
+      - priority
+      - resolution_date
+
+  - name: campaigns
+    description: "Marketing campaigns"
+    source_table: "DimCampaign"
+    source_schema: "dimensions"
+    attributes:
+      - campaign_id
+      - name
+      - campaign_type
+      - objective
+      - start_date
+      - end_date
+      - budget
+
+  - name: campaign_targets
+    description: "Targets of marketing campaigns"
+    source_table: "fact_campaign_target"
+    source_schema: "facts"
+    attributes:
+      - target_id
+      - campaign_id
+      - customer_id
+      - assigned_date
+      - channel
+      - response_flag
+
+  - name: network_outages
+    description: "Network outage incidents"
+    source_table: "FactNetworkOutage"
+    source_schema: "facts"
+    attributes:
+      - outage_id
+      - assignment_id
+      - start_time
+      - end_time
+      - outage_type
+      - region
+      - impacted_customers_count
+
+# Metrics and their data lineage
+metrics:
+  - name: average_revenue_per_user
+    description: "Average Revenue Per User (ARPU)"
+    depends_on:
+      - raw_bil_invoices
+      - stg_bil_invoices
+      - fact_invoice
+      - arpu
+    formula: "SUM(invoices.total_amount) / COUNT(DISTINCT invoices.customer_id)"
+    
+  - name: customer_retention_rate
+    description: "Customer Retention Rate"
+    depends_on:
+      - raw_prv_service_assignments
+      - stg_prv_service_assignments
+      - FactServiceAssignment
+      - customer_retention_rate
+    formula: >
+      COUNT(DISTINCT CASE WHEN service_assignments.end_date IS NULL OR 
+      service_assignments.end_date >= DATEADD(month, 1, service_assignments.start_date) 
+      THEN service_assignments.customer_id END) / 
+      NULLIF(COUNT(DISTINCT service_assignments.customer_id), 0)
+      
+  - name: customer_churn_rate
+    description: "Customer Churn Rate"
+    depends_on:
+      - customer_retention_rate
+    formula: "1 - customer_retention_rate"
+    
+  - name: customer_lifetime_value
+    description: "Customer Lifetime Value (CLV)"
+    depends_on:
+      - raw_crm_customers
+      - raw_bil_invoices
+      - stg_crm_customers
+      - stg_bil_invoices
+      - DimCustomer
+      - fact_invoice
+      - customer_lifetime_value
+      - customer_retention_rate
+    formula: >
+      SUM(invoices.total_amount) / COUNT(DISTINCT invoices.customer_id) * 
+      (1 / NULLIF(1 - customer_retention_rate, 0))
+      
+  - name: customer_acquisition_cost
+    description: "Customer Acquisition Cost (CAC)"
+    depends_on:
+      - raw_mkt_campaigns
+      - raw_mkt_campaign_targets
+      - stg_mkt_campaigns
+      - stg_mkt_campaign_targets
+      - DimCampaign
+      - fact_campaign_target
+      - customer_acquisition_cost
+    formula: >
+      SUM(CASE WHEN campaigns.campaign_type = 'Acquisition' THEN campaigns.budget END) / 
+      NULLIF(COUNT(DISTINCT CASE WHEN campaign_targets.response_flag = TRUE THEN campaign_targets.customer_id END), 0)
+      
+  - name: service_adoption_rate
+    description: "Service Adoption Rate"
+    depends_on:
+      - raw_prv_service_assignments
+      - raw_crm_customers
+      - stg_prv_service_assignments
+      - stg_crm_customers
+      - DimCustomer
+      - FactServiceAssignment
+      - service_adoption_rate
+    formula: >
+      COUNT(DISTINCT service_assignments.customer_id) / 
+      NULLIF(COUNT(DISTINCT customers.customer_id), 0)
