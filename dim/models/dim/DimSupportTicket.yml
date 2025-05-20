@@ -1,0 +1,74 @@
+version: 2
+models:
+-   name: DimSupportTicket
+    description: Support Ticket Dimension
+    columns:
+    -   name: TicketSK
+        tests:
+        - unique
+        - not_null
+        meta:
+            column_type: int
+    -   name: TICKET_ID
+        tests:
+        - not_null
+        meta:
+            column_type: int
+    -   name: CUSTOMER_ID
+        
+        meta:
+            column_type: int
+    -   name: CREATED_DATE
+        tests:
+        - not_null
+        meta:
+            column_type: date
+    -   name: STATUS
+        tests:
+        - 'accepted_values: [''Open'', ''In Progress'', ''Pending Customer'', ''Resolved'',
+            ''Closed'']'
+        meta:
+            column_type: string
+    -   name: PRIORITY
+        tests:
+        - 'accepted_values: [''Low'', ''Medium'', ''High'', ''Critical'']'
+        meta:
+            column_type: string
+    -   name: SUBJECT
+        
+        meta:
+            column_type: string
+    -   name: DESCRIPTION
+        
+        meta:
+            column_type: string
+    -   name: CHANNEL_OF_CONTACT
+        tests:
+        - 'accepted_values: [''Phone'', ''Email'', ''Chat'', ''Web Form'']'
+        meta:
+            column_type: string
+    -   name: ASSIGNED_AGENT
+        
+        meta:
+            column_type: string
+    -   name: RESOLUTION_DATE
+        
+        meta:
+            column_type: date
+    -   name: NOTE_DATE
+        
+        meta:
+            column_type: datetime
+    -   name: NOTE_AUTHOR
+        
+        meta:
+            column_type: string
+    -   name: NOTE_TEXT
+        
+        meta:
+            column_type: string
+    -   name: INTERNAL_FLAG
+        tests:
+        - 'accepted_values: [True, False]'
+        meta:
+            column_type: boolean

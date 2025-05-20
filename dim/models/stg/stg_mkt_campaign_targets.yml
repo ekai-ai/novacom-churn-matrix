@@ -1,0 +1,47 @@
+version: 2
+models:
+-   name: stg_mkt_campaign_targets
+    description: Staging table for MKT_CAMPAIGN_TARGETS. This table is a cleaned and
+        standardized representation of raw marketing campaign targets, used for further
+        aggregation in the silver layer.
+    columns:
+    -   name: TARGET_ID
+        
+        meta:
+            column_type: int64
+    -   name: CAMPAIGN_ID
+        
+        meta:
+            column_type: int64
+    -   name: CUSTOMER_ID
+        
+        meta:
+            column_type: int64
+    -   name: ASSIGNED_DATE
+        
+        meta:
+            column_type: date
+    -   name: STATUS
+        
+        meta:
+            column_type: string
+    -   name: LAST_CONTACT_DATE
+        
+        meta:
+            column_type: date
+    -   name: CHANNEL
+        
+        meta:
+            column_type: string
+    -   name: RESPONSE_FLAG
+        
+        meta:
+            column_type: boolean
+    -   name: CREATED_AT
+        
+        meta:
+            column_type: datetime
+    -   name: UPDATED_AT
+        
+        meta:
+            column_type: datetime

@@ -1,0 +1,55 @@
+version: 2
+models:
+-   name: stg_sup_kb_articles
+    description: Staging table for knowledge base articles, sourced from SUP_KB_ARTICLES.
+    columns:
+    -   name: KB_ARTICLE_ID
+        tests:
+        - not_null
+        - unique
+        meta:
+            column_type: int64
+    -   name: TITLE
+        tests:
+        - not_null
+        meta:
+            column_type: string
+    -   name: CONTENT
+        tests:
+        - not_null
+        meta:
+            column_type: string
+    -   name: CATEGORY
+        tests:
+        - not_null
+        meta:
+            column_type: string
+    -   name: ARTICLE_AUTHOR
+        tests:
+        - not_null
+        meta:
+            column_type: string
+    -   name: VERSION_NUMBER
+        tests:
+        - not_null
+        meta:
+            column_type: string
+    -   name: EXTERNAL_LINK
+        
+        meta:
+            column_type: string
+    -   name: LAST_UPDATED
+        tests:
+        - not_null
+        meta:
+            column_type: datetime(time_unit='us', time_zone=none)
+    -   name: CREATED_AT
+        tests:
+        - not_null
+        meta:
+            column_type: datetime(time_unit='us', time_zone=none)
+    -   name: UPDATED_AT
+        tests:
+        - not_null
+        meta:
+            column_type: datetime(time_unit='us', time_zone=none)

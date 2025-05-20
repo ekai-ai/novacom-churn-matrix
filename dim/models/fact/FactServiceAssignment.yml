@@ -1,0 +1,41 @@
+version: 2
+models:
+-   name: FactServiceAssignment
+    description: Service assignment fact table.
+    columns:
+    -   name: ASSIGNMENT_ID
+        tests:
+        - not_null
+        - unique
+        meta:
+            column_type: int64
+    -   name: SERVICE_ID
+        tests:
+        - not_null
+        meta:
+            column_type: int64
+    -   name: CUSTOMER_ID
+        tests:
+        - not_null
+        meta:
+            column_type: int64
+    -   name: START_DATE_KEY
+        tests:
+        - not_null
+        meta:
+            column_type: int64
+    -   name: END_DATE_KEY
+        tests:
+        - 'null'
+        meta:
+            column_type: int64
+    -   name: STATUS
+        tests:
+        - 'accepted_values: [''Active'', ''Inactive'', ''Suspended'', ''Terminated'']'
+        meta:
+            column_type: string
+    -   name: PROVISIONING_STATUS
+        tests:
+        - 'accepted_values: [''Pending'', ''In Progress'', ''Completed'', ''Failed'']'
+        meta:
+            column_type: string

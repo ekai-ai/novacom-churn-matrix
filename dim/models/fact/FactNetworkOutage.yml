@@ -1,0 +1,48 @@
+version: 2
+models:
+-   name: FactNetworkOutage
+    description: Network outage fact table.
+    columns:
+    -   name: OUTAGE_ID
+        tests:
+        - not_null
+        - unique
+        meta:
+            column_type: int64
+    -   name: ASSIGNMENT_ID
+        tests:
+        - not_null
+        meta:
+            column_type: int64
+    -   name: START_TIME_KEY
+        tests:
+        - not_null
+        meta:
+            column_type: datetime
+    -   name: END_TIME_KEY
+        tests:
+        - dbt_utils.accepted_range(min_value=null)
+        meta:
+            column_type: datetime
+    -   name: OUTAGE_TYPE
+        tests:
+        - dbt_utils.accepted_values(values=['Planned', 'Unplanned'])
+        meta:
+            column_type: string
+    -   name: REGION
+        
+        meta:
+            column_type: string
+    -   name: IMPACTED_CUSTOMERS_COUNT
+        tests:
+        - dbt_utils.accepted_range(min_value=0)
+        meta:
+            column_type: int64
+    -   name: CAUSE
+        
+        meta:
+            column_type: string
+    -   name: RESOLUTION
+        
+        meta:
+            column_type: string

@@ -1,0 +1,127 @@
+version: 2
+models:
+-   name: DimCustomer
+    description: Customer dimension, containing customer details.  PII fields (FIRST_NAME,
+        MIDDLE_NAME, LAST_NAME, EMAIL, PHONE, DATE_OF_BIRTH, ADDRESS_LINE1, ADDRESS_LINE2,
+        BILLING_ADDRESS, SHIPPING_ADDRESS, CONTACT_VALUE) must be masked or pseudonymized.
+    columns:
+    -   name: CustomerSK
+        tests:
+        - unique
+        - not_null
+        meta:
+            column_type: int
+    -   name: CUSTOMER_ID
+        tests:
+        - not_null
+        meta:
+            column_type: int
+    -   name: FIRST_NAME
+        tests:
+        - not_null
+        meta:
+            column_type: string
+    -   name: MIDDLE_NAME
+        
+        meta:
+            column_type: string
+    -   name: LAST_NAME
+        
+        meta:
+            column_type: string
+    -   name: EMAIL
+        
+        meta:
+            column_type: string
+    -   name: PHONE
+        
+        meta:
+            column_type: string
+    -   name: DATE_OF_BIRTH
+        
+        meta:
+            column_type: date
+    -   name: ADDRESS_LINE1
+        
+        meta:
+            column_type: string
+    -   name: ADDRESS_LINE2
+        
+        meta:
+            column_type: string
+    -   name: CITY
+        
+        meta:
+            column_type: string
+    -   name: STATE
+        
+        meta:
+            column_type: string
+    -   name: ZIP_CODE
+        
+        meta:
+            column_type: string
+    -   name: COUNTRY
+        
+        meta:
+            column_type: string
+    -   name: CUSTOMER_SEGMENT
+        
+        meta:
+            column_type: string
+    -   name: CUSTOMER_TIER
+        
+        meta:
+            column_type: string
+    -   name: START_DATE
+        
+        meta:
+            column_type: date
+    -   name: STATUS
+        
+        meta:
+            column_type: string
+    -   name: ACCOUNT_TYPE
+        
+        meta:
+            column_type: string
+    -   name: CREATION_DATE
+        
+        meta:
+            column_type: date
+    -   name: ACCOUNT_BALANCE
+        
+        meta:
+            column_type: decimal
+    -   name: BILLING_ADDRESS
+        
+        meta:
+            column_type: string
+    -   name: SHIPPING_ADDRESS
+        
+        meta:
+            column_type: string
+    -   name: CONTACT_TYPE
+        
+        meta:
+            column_type: string
+    -   name: CONTACT_VALUE
+        
+        meta:
+            column_type: string
+    -   name: IS_PRIMARY
+        
+        meta:
+            column_type: boolean
+    -   name: CONTACT_LABEL
+        
+        meta:
+            column_type: string
+    -   name: EffectiveDate
+        
+        meta:
+            column_type: date
+    -   name: EndDate
+        
+        meta:
+            column_type: date

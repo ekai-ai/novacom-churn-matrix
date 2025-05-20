@@ -1,0 +1,47 @@
+version: 2
+models:
+-   name: FactCampaignTarget
+    description: Marketing campaign target fact table.
+    columns:
+    -   name: TARGET_ID
+        tests:
+        - not_null
+        - unique
+        meta:
+            column_type: int
+    -   name: CAMPAIGN_ID
+        tests:
+        - not_null
+        meta:
+            column_type: int
+    -   name: CUSTOMER_ID
+        tests:
+        - not_null
+        meta:
+            column_type: int
+    -   name: ASSIGNED_DATE_KEY
+        tests:
+        - not_null
+        meta:
+            column_type: date
+    -   name: STATUS
+        tests:
+        - not_null
+        - accepted_values
+        meta:
+            column_type: string
+    -   name: LAST_CONTACT_DATE_KEY
+        
+        meta:
+            column_type: date
+    -   name: CHANNEL
+        tests:
+        - not_null
+        - accepted_values
+        meta:
+            column_type: string
+    -   name: RESPONSE_FLAG
+        tests:
+        - is_null
+        meta:
+            column_type: boolean

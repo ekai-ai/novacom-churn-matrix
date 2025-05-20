@@ -1,0 +1,47 @@
+version: 2
+models:
+-   name: DimKBArticle
+    description: Knowledge Base Article Dimension
+    columns:
+    -   name: KBArticleSK
+        tests:
+        - unique
+        - not_null
+        meta:
+            column_type: int
+    -   name: KB_ARTICLE_ID
+        tests:
+        - not_null
+        meta:
+            column_type: int
+    -   name: TITLE
+        tests:
+        - not_empty
+        meta:
+            column_type: string
+    -   name: CONTENT
+        
+        meta:
+            column_type: string
+    -   name: CATEGORY
+        
+        meta:
+            column_type: string
+    -   name: ARTICLE_AUTHOR
+        
+        meta:
+            column_type: string
+    -   name: VERSION_NUMBER
+        
+        meta:
+            column_type: string
+    -   name: EXTERNAL_LINK
+        
+        meta:
+            column_type: string
+    -   name: LAST_UPDATED
+        tests:
+        - not_null
+        - valid_date
+        meta:
+            column_type: datetime

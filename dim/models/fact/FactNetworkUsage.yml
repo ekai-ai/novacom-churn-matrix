@@ -1,0 +1,49 @@
+version: 2
+models:
+-   name: FactNetworkUsage
+    description: Network usage fact table.
+    columns:
+    -   name: USAGE_ID
+        tests:
+        - not_null
+        - unique
+        meta:
+            column_type: int
+    -   name: ASSIGNMENT_ID
+        tests:
+        - not_null
+        meta:
+            column_type: int
+    -   name: USAGE_DATE_KEY
+        tests:
+        - not_null
+        meta:
+            column_type: date
+    -   name: USAGE_TYPE
+        tests:
+        - accepted_values:['Upload', 'Download', 'Total']
+        meta:
+            column_type: string
+    -   name: DATA_CONSUMED
+        tests:
+        - not_null
+        - '>=0'
+        meta:
+            column_type: decimal(precision=none, scale=2)
+    -   name: USAGE_UNIT
+        tests:
+        - accepted_values:['KB', 'MB', 'GB', 'TB']
+        meta:
+            column_type: string
+    -   name: USAGE_PEAK
+        tests:
+        - not_null
+        - '>=0'
+        meta:
+            column_type: decimal(precision=none, scale=2)
+    -   name: USAGE_COST
+        tests:
+        - not_null
+        - '>=0'
+        meta:
+            column_type: decimal(precision=none, scale=2)

@@ -1,0 +1,56 @@
+version: 2
+models:
+-   name: stg_crm_accounts
+    description: Staging table for CRM accounts data.
+    columns:
+    -   name: ACCOUNT_ID
+        tests:
+        - not_null
+        - unique
+        meta:
+            column_type: int64
+    -   name: CUSTOMER_ID
+        tests:
+        - not_null
+        meta:
+            column_type: int64
+    -   name: ACCOUNT_TYPE
+        
+        meta:
+            column_type: string
+    -   name: CREATION_DATE
+        
+        meta:
+            column_type: date
+    -   name: STATUS
+        
+        meta:
+            column_type: string
+    -   name: CURRENCY_CODE
+        
+        meta:
+            column_type: string
+    -   name: BILLING_ADDRESS
+        
+        meta:
+            column_type: string
+    -   name: SHIPPING_ADDRESS
+        
+        meta:
+            column_type: string
+    -   name: ACCOUNT_BALANCE
+        
+        meta:
+            column_type: decimal(precision=none, scale=2)
+    -   name: NOTE
+        
+        meta:
+            column_type: string
+    -   name: CREATED_AT
+        
+        meta:
+            column_type: datetime(time_unit='us', time_zone=none)
+    -   name: UPDATED_AT
+        
+        meta:
+            column_type: datetime(time_unit='us', time_zone=none)

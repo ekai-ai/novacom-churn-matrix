@@ -1,0 +1,38 @@
+version: 2
+models:
+-   name: stg_sup_ticket_notes
+    description: Staging layer for SUP_TICKET_NOTES table from raw data. Includes
+        PII masking for NOTE_AUTHOR to safeguard sensitive information.
+    columns:
+    -   name: NOTE_ID
+        
+        meta:
+            column_type: int64
+    -   name: TICKET_ID
+        
+        meta:
+            column_type: int64
+    -   name: NOTE_DATE
+        
+        meta:
+            column_type: datetime
+    -   name: NOTE_AUTHOR
+        
+        meta:
+            column_type: string
+    -   name: NOTE_TEXT
+        
+        meta:
+            column_type: string
+    -   name: INTERNAL_FLAG
+        
+        meta:
+            column_type: boolean
+    -   name: CREATED_AT
+        
+        meta:
+            column_type: datetime
+    -   name: UPDATED_AT
+        
+        meta:
+            column_type: datetime

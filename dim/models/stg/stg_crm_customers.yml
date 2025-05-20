@@ -1,0 +1,90 @@
+version: 2
+models:
+-   name: stg_crm_customers
+    description: Staging table for customer data from the CRM system.
+    columns:
+    -   name: CUSTOMER_ID
+        tests:
+        - not_null
+        - unique
+        meta:
+            column_type: int64
+    -   name: FIRST_NAME
+        tests:
+        - not_null
+        meta:
+            column_type: string
+    -   name: MIDDLE_NAME
+        
+        meta:
+            column_type: string
+    -   name: LAST_NAME
+        tests:
+        - not_null
+        meta:
+            column_type: string
+    -   name: EMAIL
+        tests:
+        - not_null
+        meta:
+            column_type: string
+    -   name: PHONE
+        
+        meta:
+            column_type: string
+    -   name: DATE_OF_BIRTH
+        
+        meta:
+            column_type: date
+    -   name: ADDRESS_LINE1
+        
+        meta:
+            column_type: string
+    -   name: ADDRESS_LINE2
+        
+        meta:
+            column_type: string
+    -   name: CITY
+        
+        meta:
+            column_type: string
+    -   name: STATE
+        
+        meta:
+            column_type: string
+    -   name: ZIP_CODE
+        
+        meta:
+            column_type: string
+    -   name: COUNTRY
+        
+        meta:
+            column_type: string
+    -   name: CUSTOMER_SEGMENT
+        
+        meta:
+            column_type: string
+    -   name: CUSTOMER_TIER
+        
+        meta:
+            column_type: string
+    -   name: START_DATE
+        
+        meta:
+            column_type: date
+    -   name: STATUS
+        
+        meta:
+            column_type: string
+    -   name: NOTE
+        
+        meta:
+            column_type: string
+    -   name: CREATED_AT
+        
+        meta:
+            column_type: datetime(time_unit='us', time_zone=none)
+    -   name: UPDATED_AT
+        
+        meta:
+            column_type: datetime(time_unit='us', time_zone=none)

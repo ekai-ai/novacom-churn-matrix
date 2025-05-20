@@ -1,0 +1,235 @@
+-- DBML for Novacom Dimensional Model (Snowflake)
+-- Target Schema: SILVER
+-- Source Schema: BRONZE
+
+-- Dimension Tables
+
+Table DimCustomer {
+  CustomerSK integer [pk, not null]
+  CUSTOMER_ID integer [not null]
+  FIRST_NAME varchar
+  MIDDLE_NAME varchar
+  LAST_NAME varchar
+  EMAIL varchar
+  PHONE varchar
+  DATE_OF_BIRTH date
+  ADDRESS_LINE1 varchar
+  ADDRESS_LINE2 varchar
+  CITY varchar
+  STATE varchar
+  ZIP_CODE varchar
+  COUNTRY varchar
+  CUSTOMER_SEGMENT varchar
+  CUSTOMER_TIER varchar
+  START_DATE date
+  STATUS varchar
+  ACCOUNT_TYPE varchar
+  CREATION_DATE date
+  ACCOUNT_BALANCE decimal
+  BILLING_ADDRESS varchar
+  SHIPPING_ADDRESS varchar
+  CONTACT_TYPE varchar
+  CONTACT_VALUE varchar
+  IS_PRIMARY boolean
+  CONTACT_LABEL varchar
+  EffectiveDate date
+  EndDate date
+  Indexes {
+    (CustomerSK) [unique]
+    (CUSTOMER_ID) [unique]
+  }
+}
+
+Table DimService {
+  ServiceSK integer [pk, not null]
+  SERVICE_ID integer [not null]
+  SERVICE_NAME varchar
+  SERVICE_TYPE varchar
+  DESCRIPTION varchar
+  MONTHLY_COST decimal
+  ACTIVE_FLAG boolean
+  PROVISIONING_TEAM varchar
+    Indexes {
+    (ServiceSK) [unique]
+    (SERVICE_ID) [unique]
+  }
+}
+
+Table DimDate {
+  DATE_KEY integer [pk, not null]
+  FULL_DATE date [not null]
+  DAY_OF_WEEK varchar
+  DAY_OF_MONTH integer
+  MONTH integer
+  QUARTER integer
+  YEAR integer
+    Indexes {
+    (DATE_KEY) [unique]
+  }
+}
+
+Table DimCampaign {
+  CampaignSK integer [pk, not null]
+  CAMPAIGN_ID integer [not null]
+  NAME varchar
+  CAMPAIGN_TYPE varchar
+  OBJECTIVE varchar
+  TARGET_AUDIENCE varchar
+  CONVERSION_GOAL varchar
+  START_DATE date
+  END_DATE date
+  BUDGET decimal
+    Indexes {
+    (CampaignSK) [unique]
+    (CAMPAIGN_ID) [unique]
+  }
+}
+
+Table DimOpportunity {
+  OpportunitySK integer [pk, not null]
+  OPPORTUNITY_ID integer [not null]
+  ACCOUNT_ID integer
+  STAGE varchar
+  PIPELINE_STAGE varchar
+  AMOUNT decimal
+  PROBABILITY_OF_CLOSE decimal
+  CLOSE_DATE date
+  ASSIGNED_SALES_REP varchar
+  NEXT_STEP varchar
+    Indexes {
+    (OpportunitySK) [unique]
+    (OPPORTUNITY_ID) [unique]
+  }
+}
+
+Table DimNetworkEquipment {
+  EquipmentSK integer [pk, not null]
+  EQUIPMENT_ID integer [not null]
+  ASSIGNMENT_ID integer
+  EQUIPMENT_TYPE varchar
+  MODEL varchar
+  SERIAL_NUMBER varchar
+  FIRMWARE_VERSION varchar
+  IP_ADDRESS varchar
+  MAC_ADDRESS varchar
+  LOCATION varchar
+  STATUS varchar
+  LAST_MAINTENANCE_DATE date
+    Indexes {
+    (EquipmentSK) [unique]
+    (EQUIPMENT_ID) [unique]
+  }
+}
+
+Table DimSupportTicket {
+  TicketSK integer [pk, not null]
+  TICKET_ID integer [not null]
+  CUSTOMER_ID integer
+  CREATED_DATE date [not null]
+  STATUS varchar
+  PRIORITY varchar
+  SUBJECT varchar
+  DESCRIPTION varchar
+  CHANNEL_OF_CONTACT varchar
+  ASSIGNED_AGENT varchar
+  RESOLUTION_DATE date
+  NOTE_DATE date
+  NOTE_AUTHOR varchar
+  NOTE_TEXT varchar
+  INTERNAL_FLAG boolean
+    Indexes {
+    (TicketSK) [unique]
+    (TICKET_ID) [unique]
+  }
+}
+
+Table DimKBArticle {
+  KBArticleSK integer [pk, not null]
+  KB_ARTICLE_ID integer [not null]
+  TITLE varchar
+  CONTENT varchar
+  CATEGORY varchar
+  ARTICLE_AUTHOR varchar
+  VERSION_NUMBER varchar
+  EXTERNAL_LINK varchar
+  LAST_UPDATED date
+    Indexes {
+    (KBArticleSK) [unique]
+    (KB_ARTICLE_ID) [unique]
+  }
+}
+
+-- Fact Tables
+
+Table FactInvoice {
+  INVOICE_ID integer [not null]
+  CustomerSK integer [not null, ref: > DimCustomer.CustomerSK]
+  InvoiceDateSK integer [not null, ref: > DimDate.DATE_KEY]
+  DueDateSK integer [not null, ref: > DimDate.DATE_KEY]
+  TOTAL_AMOUNT decimal
+  TAX_AMOUNT decimal
+  DISCOUNT_AMOUNT decimal
+  PAYMENT_AMOUNT decimal
+  QUANTITY integer
+  UNIT_PRICE decimal
+  TAX_RATE decimal
+  DISCOUNT_RATE decimal
+  LINE_TOTAL decimal
+  CURRENCY_CODE varchar
+  STATUS varchar
+  PAYMENT_METHOD varchar
+  PaymentDateSK integer [ref: > DimDate.DATE_KEY]
+}
+
+
+Table FactServiceAssignment {
+  ASSIGNMENT_ID integer [not null]
+  ServiceSK integer [not null, ref: > DimService.ServiceSK]
+  CustomerSK integer [not null, ref: > DimCustomer.CustomerSK]
+  StartDateSK integer [not null, ref: > DimDate.DATE_KEY]
+  EndDateSK integer [ref: > DimDate.DATE_KEY]
+  STATUS varchar
+  PROVISIONING_STATUS varchar
+  AssignmentDurationDays integer
+  EquipmentSK integer [ref: > DimNetworkEquipment.EquipmentSK]
+}
+
+Table FactNetworkUsage {
+  USAGE_ID integer [not null]
+  ASSIGNMENT_ID integer [not null, ref: > FactServiceAssignment.ASSIGNMENT_ID]
+  UsageDateSK integer [not null, ref: > DimDate.DATE_KEY]
+  DATA_CONSUMED decimal
+  USAGE_PEAK decimal
+  USAGE_COST decimal
+  USAGE_TYPE varchar
+  USAGE_UNIT varchar
+}
+
+Table FactNetworkOutage {
+  OUTAGE_ID integer [not null]
+  ASSIGNMENT_ID integer [not null, ref: > FactServiceAssignment.ASSIGNMENT_ID]
+  StartTimeSK integer [not null, ref: > DimDate.DATE_KEY]
+  EndTimeSK integer [ref: > DimDate.DATE_KEY]
+  OUTAGE_TYPE varchar
+  IMPACTED_CUSTOMERS_COUNT integer
+  OutageDurationSeconds integer
+}
+
+Table FactSupportTicket {
+  TICKET_ID integer [not null, ref: > DimSupportTicket.TICKET_ID]
+  CustomerSK integer [not null, ref: > DimCustomer.CustomerSK]
+  CreatedDateSK integer [not null, ref: > DimDate.DATE_KEY]
+  ResolutionDateSK integer [ref: > DimDate.DATE_KEY]
+  TimeToResolutionSeconds integer
+}
+
+Table FactCampaignTarget {
+  TARGET_ID integer [not null]
+  CampaignSK integer [not null, ref: > DimCampaign.CampaignSK]
+  CustomerSK integer [not null, ref: > DimCustomer.CustomerSK]
+  AssignedDateSK integer [not null, ref: > DimDate.DATE_KEY]
+  LastContactDateSK integer [ref: > DimDate.DATE_KEY]
+  STATUS varchar
+  CHANNEL varchar
+  RESPONSE_FLAG boolean
+}

@@ -1,0 +1,50 @@
+version: 2
+models:
+-   name: DimCampaign
+    description: Marketing campaign dimension.
+    columns:
+    -   name: CampaignSK
+        tests:
+        - unique
+        - not_null
+        meta:
+            column_type: int
+    -   name: CAMPAIGN_ID
+        tests:
+        - not_null
+        meta:
+            column_type: int
+    -   name: NAME
+        tests:
+        - not_null
+        meta:
+            column_type: string
+    -   name: CAMPAIGN_TYPE
+        tests:
+        - not_null
+        meta:
+            column_type: string
+    -   name: OBJECTIVE
+        
+        meta:
+            column_type: string
+    -   name: TARGET_AUDIENCE
+        
+        meta:
+            column_type: string
+    -   name: CONVERSION_GOAL
+        
+        meta:
+            column_type: string
+    -   name: START_DATE
+        
+        meta:
+            column_type: date
+    -   name: END_DATE
+        
+        meta:
+            column_type: date
+    -   name: BUDGET
+        
+        meta:
+            column_type: decimal(precision=none, scale=2)
