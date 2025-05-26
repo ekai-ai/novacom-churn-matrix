@@ -1,0 +1,103 @@
+version: 2
+
+models:
+  - name: customer_360_view
+    description: "Comprehensive customer analytics with 360-degree view of customer behavior, revenue, services, support, and churn indicators"
+    columns:
+      - name: customer_key
+        description: "Surrogate key for customer dimension"
+        tests:
+          - not_null
+          - unique
+      - name: customer_id
+        description: "Natural key from source system"
+        tests:
+          - not_null
+      - name: total_revenue
+        description: "Total revenue from customer across all time"
+        tests:
+          - not_null
+      - name: revenue_last_12_months
+        description: "Revenue from customer in last 12 months"
+        tests:
+          - not_null
+      - name: is_churned
+        description: "Flag indicating if customer has churned (1=churned, 0=active)"
+        tests:
+          - not_null
+          - accepted_values:
+              values: [0, 1]
+      - name: churn_risk_flag
+        description: "Flag indicating if customer is at risk of churning (1=at risk, 0=not at risk)"
+        tests:
+          - not_null
+          - accepted_values:
+              values: [0, 1]
+      - name: customer_tenure_days
+        description: "Number of days since customer started"
+        tests:
+          - not_null
+    tags: ["customer_analytics", "customer_360"]
+
+  - name: customer_segmentation_analysis
+    description: "Customer segmentation analysis with performance metrics by segment and behavioral patterns"
+    columns:
+      - name: customer_segment
+        description: "Customer segment (Residential, SMB, Enterprise, Government)"
+        tests:
+          - not_null
+      - name: customer_tier
+        description: "Customer tier (Bronze, Silver, Gold, Platinum)"
+        tests:
+          - not_null
+      - name: customer_count
+        description: "Number of customers in this segment"
+        tests:
+          - not_null
+      - name: churn_rate
+        description: "Percentage of customers who have churned in this segment"
+        tests:
+          - not_null
+      - name: segment_priority_score
+        description: "Priority score for this segment (1-10, higher is more important)"
+        tests:
+          - not_null
+          - accepted_values:
+              values: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    tags: ["customer_analytics", "segmentation"]
+
+  - name: churn_prediction_features
+    description: "Feature set for machine learning churn prediction models with comprehensive customer behavior metrics"
+    columns:
+      - name: customer_key
+        description: "Surrogate key for customer dimension"
+        tests:
+          - not_null
+          - unique
+      - name: is_churned
+        description: "Target variable for churn prediction (1=churned, 0=active)"
+        tests:
+          - not_null
+          - accepted_values:
+              values: [0, 1]
+      - name: revenue_last_12_months
+        description: "Revenue feature for ML model"
+        tests:
+          - not_null
+      - name: active_services_count
+        description: "Number of active services feature for ML model"
+        tests:
+          - not_null
+      - name: no_revenue_3m_flag
+        description: "Binary feature indicating no revenue in last 3 months"
+        tests:
+          - not_null
+          - accepted_values:
+              values: [0, 1]
+      - name: service_termination_flag
+        description: "Binary feature indicating service terminations in last 12 months"
+        tests:
+          - not_null
+          - accepted_values:
+              values: [0, 1]
+    tags: ["customer_analytics", "churn_prediction", "ml_features"]

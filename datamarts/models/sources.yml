@@ -1,0 +1,165 @@
+version: 2
+
+sources:
+  - name: dimensional_warehouse
+    database: NOVACOM
+    schema: SILVER
+    description: "Dimensional warehouse tables from the Kimball model"
+    tables:
+      - name: dimcustomer
+        description: "Customer dimension table"
+        columns:
+          - name: customer_key
+            description: "Surrogate key for customer dimension"
+          - name: customer_id
+            description: "Natural key from source system"
+          - name: customer_segment
+            description: "Customer segment (Residential, SMB, Enterprise, Government)"
+          - name: customer_tier
+            description: "Customer tier (Bronze, Silver, Gold, Platinum)"
+          - name: status
+            description: "Customer status (Active, Inactive, Churned)"
+
+      - name: dimservice
+        description: "Service dimension table"
+        columns:
+          - name: service_key
+            description: "Surrogate key for service dimension"
+          - name: service_id
+            description: "Natural key from source system"
+          - name: service_type
+            description: "Type of service (Internet, TV, Mobile, Voice)"
+          - name: monthly_cost
+            description: "Monthly cost of the service"
+
+      - name: dimcampaign
+        description: "Campaign dimension table"
+        columns:
+          - name: campaign_key
+            description: "Surrogate key for campaign dimension"
+          - name: campaign_id
+            description: "Natural key from source system"
+          - name: campaign_type
+            description: "Type of marketing campaign"
+          - name: objective
+            description: "Campaign objective"
+
+      - name: dimsupportticket
+        description: "Support ticket dimension table"
+        columns:
+          - name: ticket_key
+            description: "Surrogate key for support ticket dimension"
+          - name: ticket_id
+            description: "Natural key from source system"
+          - name: priority
+            description: "Ticket priority level"
+          - name: status
+            description: "Ticket status"
+
+      - name: dim_date
+        description: "Date dimension table"
+        columns:
+          - name: date_key
+            description: "Date in YYYYMMDD format"
+          - name: full_date
+            description: "Full date"
+          - name: year
+            description: "Year"
+          - name: quarter
+            description: "Quarter"
+          - name: month
+            description: "Month"
+
+      - name: fact_invoice
+        description: "Invoice fact table"
+        columns:
+          - name: customer_key
+            description: "Foreign key to customer dimension"
+          - name: date_key
+            description: "Foreign key to date dimension"
+          - name: total_amount
+            description: "Total invoice amount"
+          - name: tax_amount
+            description: "Tax amount"
+          - name: discount_amount
+            description: "Discount amount"
+
+      - name: factserviceassignment
+        description: "Service assignment fact table"
+        columns:
+          - name: customer_key
+            description: "Foreign key to customer dimension"
+          - name: service_key
+            description: "Foreign key to service dimension"
+          - name: start_date_key
+            description: "Foreign key to date dimension for start date"
+          - name: end_date_key
+            description: "Foreign key to date dimension for end date"
+          - name: status
+            description: "Assignment status"
+
+      - name: fact_campaign_target
+        description: "Campaign target fact table"
+        columns:
+          - name: customer_key
+            description: "Foreign key to customer dimension"
+          - name: campaign_key
+            description: "Foreign key to campaign dimension"
+          - name: assigned_date_key
+            description: "Foreign key to date dimension"
+          - name: response_flag
+            description: "Campaign response indicator"
+
+      - name: factsupportticket
+        description: "Support ticket fact table"
+        columns:
+          - name: customer_key
+            description: "Foreign key to customer dimension"
+          - name: ticket_key
+            description: "Foreign key to support ticket dimension"
+          - name: created_date_key
+            description: "Foreign key to date dimension for creation date"
+          - name: resolution_date_key
+            description: "Foreign key to date dimension for resolution date"
+
+      - name: factnetworkusage
+        description: "Network usage fact table"
+        columns:
+          - name: assignment_id
+            description: "Service assignment identifier"
+          - name: usage_date_key
+            description: "Foreign key to date dimension"
+          - name: data_consumed
+            description: "Amount of data consumed"
+          - name: usage_cost
+            description: "Cost of usage"
+
+      - name: factnetworkoutage
+        description: "Network outage fact table"
+        columns:
+          - name: assignment_id
+            description: "Service assignment identifier"
+          - name: start_date_key
+            description: "Foreign key to date dimension for start"
+          - name: end_date_key
+            description: "Foreign key to date dimension for end"
+          - name: outage_type
+            description: "Type of outage"
+          - name: impacted_customers_count
+            description: "Number of impacted customers"
+
+  - name: kpi_metrics
+    database: NOVACOM
+    schema: KPIs
+    description: "Calculated KPI metrics"
+    tables:
+      - name: arpu
+        description: "Average Revenue Per User metrics"
+      - name: customer_retention_rate
+        description: "Customer retention rate metrics"
+      - name: customer_lifetime_value
+        description: "Customer lifetime value metrics"
+      - name: customer_acquisition_cost
+        description: "Customer acquisition cost metrics"
+      - name: service_adoption_rate
+        description: "Service adoption rate metrics"

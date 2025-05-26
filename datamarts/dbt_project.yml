@@ -1,0 +1,36 @@
+name: 'novacom_datamarts'
+version: '1.0.0'
+config-version: 2
+
+profile: 'my_dbt_project'
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+target-path: "target"
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+vars:
+  analysis_start_date: '2023-01-01'
+  analysis_end_date: '2024-12-31'
+
+models:
+  novacom_datamarts:
+    +materialized: table
+    +database: NOVACOM
+    +schema: DATAMARTS
+    customer_analytics:
+      +materialized: table
+      +tags: ["customer_analytics", "datamart"]
+    network_ops:
+      +materialized: table
+      +tags: ["network_ops", "datamart"]
+
+tests:
+  +store_failures: true
