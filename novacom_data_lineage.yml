@@ -255,7 +255,7 @@ transformations:
     description: "Staged customer data with basic cleaning and validation"
     type: "dbt_model"
     materialization: "view"
-    path: "dim/models/stg/stg_crm_customers.sql"
+    path: "silver/models/stg/stg_crm_customers.sql"
     inputs:
       - raw_crm_customers
     outputs:
@@ -266,7 +266,7 @@ transformations:
     description: "Staged account data with basic cleaning and validation"
     type: "dbt_model"
     materialization: "view"
-    path: "dim/models/stg/stg_crm_accounts.sql"
+    path: "silver/models/stg/stg_crm_accounts.sql"
     inputs:
       - raw_crm_accounts
     outputs:
@@ -277,7 +277,7 @@ transformations:
     description: "Staged contact data with basic cleaning and validation"
     type: "dbt_model"
     materialization: "view"
-    path: "dim/models/stg/stg_crm_contacts.sql"
+    path: "silver/models/stg/stg_crm_contacts.sql"
     inputs:
       - raw_crm_contacts
     outputs:
@@ -288,7 +288,7 @@ transformations:
     description: "Staged invoice data with basic cleaning and validation"
     type: "dbt_model"
     materialization: "view"
-    path: "dim/models/stg/stg_bil_invoices.sql"
+    path: "silver/models/stg/stg_bil_invoices.sql"
     inputs:
       - raw_bil_invoices
     outputs:
@@ -299,7 +299,7 @@ transformations:
     description: "Staged invoice line item data with basic cleaning and validation"
     type: "dbt_model"
     materialization: "view"
-    path: "dim/models/stg/stg_bil_invoice_items.sql"
+    path: "silver/models/stg/stg_bil_invoice_items.sql"
     inputs:
       - raw_bil_invoice_items
     outputs:
@@ -396,119 +396,119 @@ transformations:
 
 # Dimensional and Fact models
 transformations:
-  - name: DimCustomer
-    description: "Customer dimension table combining customer, account, and contact information"
+  - name: silver_dim_customer
+    description: "Silver layer customer dimension table combining customer, account, and contact information"
     type: "dbt_model"
     materialization: "table"
-    path: "dim/models/dim/DimCustomer.sql"
+    path: "silver/models/dim/silver_dim_customer.sql"
     inputs:
       - stg_crm_customers
       - stg_crm_accounts
       - stg_crm_contacts
     outputs:
-      - table: "DimCustomer"
-        schema: "dimensions"
+      - table: "silver_dim_customer"
+        schema: "silver"
 
-  - name: DimService
-    description: "Service dimension table"
+  - name: silver_dim_service
+    description: "Silver layer service dimension table"
     type: "dbt_model"
     materialization: "table"
-    path: "dim/models/dim/DimService.sql"
+    path: "silver/models/dim/silver_dim_service.sql"
     inputs:
       - stg_prv_services
     outputs:
-      - table: "DimService"
-        schema: "dimensions"
+      - table: "silver_dim_service"
+        schema: "silver"
 
-  - name: DimCampaign
-    description: "Campaign dimension table"
+  - name: silver_dim_campaign
+    description: "Silver layer campaign dimension table"
     type: "dbt_model"
     materialization: "table"
-    path: "dim/models/dim/DimCampaign.sql"
+    path: "silver/models/dim/silver_dim_campaign.sql"
     inputs:
       - stg_mkt_campaigns
     outputs:
-      - table: "DimCampaign"
-        schema: "dimensions"
+      - table: "silver_dim_campaign"
+        schema: "silver"
 
-  - name: DimSupportTicket
-    description: "Support ticket dimension table"
+  - name: silver_dim_support_ticket
+    description: "Silver layer support ticket dimension table"
     type: "dbt_model"
     materialization: "table"
-    path: "dim/models/dim/DimSupportTicket.sql"
+    path: "silver/models/dim/silver_dim_support_ticket.sql"
     inputs:
       - stg_sup_tickets
     outputs:
-      - table: "DimSupportTicket"
-        schema: "dimensions"
+      - table: "silver_dim_support_ticket"
+        schema: "silver"
 
-  - name: fact_invoice
-    description: "Invoice fact table with line items and payment information"
+  - name: silver_fact_billing
+    description: "Silver layer billing fact table with line items and payment information"
     type: "dbt_model"
     materialization: "table"
-    path: "dim/models/fact/fact_invoice.sql"
+    path: "silver/models/fact/silver_fact_billing.sql"
     inputs:
       - stg_bil_invoices
       - stg_bil_invoice_items
       - stg_bil_payments
     outputs:
-      - table: "fact_invoice"
-        schema: "facts"
+      - table: "silver_fact_billing"
+        schema: "silver"
 
-  - name: FactServiceAssignment
-    description: "Service assignment fact table"
+  - name: silver_fact_service_assignment
+    description: "Silver layer service assignment fact table"
     type: "dbt_model"
     materialization: "table"
-    path: "dim/models/fact/FactServiceAssignment.sql"
+    path: "silver/models/fact/silver_fact_service_assignment.sql"
     inputs:
       - stg_prv_service_assignments
     outputs:
-      - table: "FactServiceAssignment"
-        schema: "facts"
+      - table: "silver_fact_service_assignment"
+        schema: "silver"
 
-  - name: FactNetworkUsage
-    description: "Network usage fact table"
+  - name: silver_fact_network_usage
+    description: "Silver layer network usage fact table"
     type: "dbt_model"
     materialization: "table"
-    path: "dim/models/fact/FactNetworkUsage.sql"
+    path: "silver/models/fact/silver_fact_network_usage.sql"
     inputs:
       - stg_nwk_usage
     outputs:
-      - table: "FactNetworkUsage"
-        schema: "facts"
+      - table: "silver_fact_network_usage"
+        schema: "silver"
 
-  - name: FactNetworkOutage
-    description: "Network outage fact table"
+  - name: silver_fact_network_outage
+    description: "Silver layer network outage fact table"
     type: "dbt_model"
     materialization: "table"
-    path: "dim/models/fact/FactNetworkOutage.sql"
+    path: "silver/models/fact/silver_fact_network_outage.sql"
     inputs:
       - stg_nwk_outages
     outputs:
-      - table: "FactNetworkOutage"
-        schema: "facts"
+      - table: "silver_fact_network_outage"
+        schema: "silver"
 
-  - name: FactSupportTicket
-    description: "Support ticket fact table"
+  - name: silver_fact_support_interaction
+    description: "Silver layer support interaction fact table"
     type: "dbt_model"
     materialization: "table"
-    path: "dim/models/fact/FactSupportTicket.sql"
+    path: "silver/models/fact/silver_fact_support_interaction.sql"
     inputs:
       - stg_sup_tickets
     outputs:
-      - table: "FactSupportTicket"
-        schema: "facts"
+      - table: "silver_fact_support_interaction"
+        schema: "silver"
 
-  - name: fact_campaign_target
-    description: "Campaign target fact table"
+  - name: silver_fact_campaign_response
+    description: "Silver layer campaign response fact table"
     type: "dbt_model"
     materialization: "table"
-    path: "dim/models/fact/fact_campaign_target.sql"
+    path: "silver/models/fact/silver_fact_campaign_response.sql"
     inputs:
       - stg_mkt_campaign_targets
     outputs:
-      - table: "fact_campaign_target"
-        schema: "facts"
+      - table: "silver_fact_campaign_response"
+        schema: "silver"
 
 # KPI models
 transformations:
@@ -585,7 +585,7 @@ transformations:
 semantic_entities:
   - name: customers
     description: "Telecom customers and their attributes"
-    source_table: "DimCustomer"
+    source_table: "silver_dim_customer"
     source_schema: "dimensions"
     attributes:
       - customer_id
@@ -608,7 +608,7 @@ semantic_entities:
 
   - name: invoices
     description: "Customer invoices for telecom services"
-    source_table: "fact_invoice"
+    source_table: "silver_fact_billing"
     source_schema: "facts"
     attributes:
       - invoice_id
@@ -630,7 +630,7 @@ semantic_entities:
 
   - name: services
     description: "Telecom services offered to customers"
-    source_table: "DimService"
+    source_table: "silver_dim_service"
     source_schema: "dimensions"
     attributes:
       - service_id
@@ -641,7 +641,7 @@ semantic_entities:
 
   - name: service_assignments
     description: "Assignment of services to customers"
-    source_table: "FactServiceAssignment"
+    source_table: "silver_fact_service_assignment"
     source_schema: "facts"
     attributes:
       - assignment_id
@@ -653,7 +653,7 @@ semantic_entities:
 
   - name: network_usage
     description: "Network usage data for customer services"
-    source_table: "FactNetworkUsage"
+    source_table: "silver_fact_network_usage"
     source_schema: "facts"
     attributes:
       - usage_id
@@ -666,7 +666,7 @@ semantic_entities:
 
   - name: support_tickets
     description: "Customer support tickets"
-    source_table: "FactSupportTicket"
+    source_table: "silver_fact_support_interaction"
     source_schema: "facts"
     attributes:
       - ticket_id
@@ -678,7 +678,7 @@ semantic_entities:
 
   - name: campaigns
     description: "Marketing campaigns"
-    source_table: "DimCampaign"
+    source_table: "silver_dim_campaign"
     source_schema: "dimensions"
     attributes:
       - campaign_id
@@ -691,7 +691,7 @@ semantic_entities:
 
   - name: campaign_targets
     description: "Targets of marketing campaigns"
-    source_table: "fact_campaign_target"
+    source_table: "silver_fact_campaign_response"
     source_schema: "facts"
     attributes:
       - target_id
@@ -703,7 +703,7 @@ semantic_entities:
 
   - name: network_outages
     description: "Network outage incidents"
-    source_table: "FactNetworkOutage"
+    source_table: "silver_fact_network_outage"
     source_schema: "facts"
     attributes:
       - outage_id
@@ -721,7 +721,7 @@ metrics:
     depends_on:
       - raw_bil_invoices
       - stg_bil_invoices
-      - fact_invoice
+      - silver_fact_billing
       - arpu
     formula: "SUM(invoices.total_amount) / COUNT(DISTINCT invoices.customer_id)"
     
@@ -730,7 +730,7 @@ metrics:
     depends_on:
       - raw_prv_service_assignments
       - stg_prv_service_assignments
-      - FactServiceAssignment
+      - silver_fact_service_assignment
       - customer_retention_rate
     formula: >
       COUNT(DISTINCT CASE WHEN service_assignments.end_date IS NULL OR 
@@ -751,8 +751,8 @@ metrics:
       - raw_bil_invoices
       - stg_crm_customers
       - stg_bil_invoices
-      - DimCustomer
-      - fact_invoice
+      - silver_dim_customer
+      - silver_fact_billing
       - customer_lifetime_value
       - customer_retention_rate
     formula: >
@@ -766,8 +766,8 @@ metrics:
       - raw_mkt_campaign_targets
       - stg_mkt_campaigns
       - stg_mkt_campaign_targets
-      - DimCampaign
-      - fact_campaign_target
+      - silver_dim_campaign
+      - silver_fact_campaign_response
       - customer_acquisition_cost
     formula: >
       SUM(CASE WHEN campaigns.campaign_type = 'Acquisition' THEN campaigns.budget END) / 
@@ -780,8 +780,8 @@ metrics:
       - raw_crm_customers
       - stg_prv_service_assignments
       - stg_crm_customers
-      - DimCustomer
-      - FactServiceAssignment
+      - silver_dim_customer
+      - silver_fact_service_assignment
       - service_adoption_rate
     formula: >
       COUNT(DISTINCT service_assignments.customer_id) / 

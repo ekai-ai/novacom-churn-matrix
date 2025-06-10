@@ -1,17 +1,17 @@
 # Novacom Telecom Data Analytics Repository
 
-This repository contains a complete data analytics solution for Novacom, a fictional telecom company. It provides a dimensional data model and KPI framework for analyzing customer data, service usage, billing, and churn metrics.
+This repository contains a complete data analytics solution for Novacom, a fictional telecom company, following medallion architecture principles. It provides a silver layer dimensional data model and KPI framework for analyzing customer data, service usage, billing, and churn metrics.
 
 ## Repository Structure
 
 The repository is organized into two main DBT (Data Build Tool) projects:
 
-### 1. Dimensional Model (`/dim` directory)
-This directory contains a Kimball-style dimensional data model with:
-- **Staging models** (`/dim/models/stg/`) - Clean and validate raw source data
-- **Dimension tables** (`/dim/models/dim/`) - Business entities like customers, services, and campaigns
-- **Fact tables** (`/dim/models/fact/`) - Measurable business processes like invoices, service assignments, and network usage
-- **Sources configuration** (`/dim/models/sources.yml`) - Definitions of source data tables
+### 1. Silver Layer - Dimensional Model (`/silver` directory)
+This directory contains the silver layer of the medallion architecture with a Kimball-style dimensional data model:
+- **Staging models** (`/silver/models/stg/`) - Bronze to silver transformation, data cleaning and validation
+- **Silver dimension tables** (`/silver/models/dim/`) - Cleaned, conformed business entities with `silver_dim_*` naming
+- **Silver fact tables** (`/silver/models/fact/`) - Validated business processes with `silver_fact_*` naming
+- **Sources configuration** (`/silver/models/sources.yml`) - Definitions of bronze layer source data tables
 
 ### 2. KPIs and Metrics (`/kpis2` directory)
 This directory contains a metrics framework with calculations for key business indicators:
@@ -42,9 +42,9 @@ The semantic layer provides a business-friendly interface to the dimensional mod
 ## Getting Started
 
 1. Set up DBT with appropriate database connections as defined in the project files
-2. Run the dimensional model build:
+2. Run the silver layer build:
    ```
-   cd dim
+   cd silver
    dbt run
    ```
 3. Run the KPIs and metrics calculations:

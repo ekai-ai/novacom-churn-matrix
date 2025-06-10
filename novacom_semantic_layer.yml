@@ -12,7 +12,7 @@ connection:
 entities:
   - name: customers
     description: "Telecom customers and their attributes"
-    physical_name: "DimCustomer"
+    physical_name: "silver_dim_customer"
     primary_key: "CustomerSK"
     attributes:
       - name: customer_id
@@ -102,7 +102,7 @@ entities:
 
   - name: invoices
     description: "Customer invoices for telecom services"
-    physical_name: "fact_invoice"
+    physical_name: "silver_fact_billing"
     primary_key: "INVOICE_ID"
     attributes:
       - name: invoice_id
@@ -187,7 +187,7 @@ entities:
 
   - name: services
     description: "Telecom services offered to customers"
-    physical_name: "DimService"
+    physical_name: "silver_dim_service"
     primary_key: "ServiceSK"
     attributes:
       - name: service_id
@@ -217,7 +217,7 @@ entities:
 
   - name: service_assignments
     description: "Assignment of services to customers"
-    physical_name: "FactServiceAssignment"
+    physical_name: "silver_fact_service_assignment"
     primary_key: "ASSIGNMENT_ID"
     attributes:
       - name: assignment_id
@@ -252,7 +252,7 @@ entities:
 
   - name: network_usage
     description: "Network usage data for customer services"
-    physical_name: "FactNetworkUsage"
+    physical_name: "silver_fact_network_usage"
     primary_key: "USAGE_ID"
     attributes:
       - name: usage_id
@@ -292,7 +292,7 @@ entities:
 
   - name: support_tickets
     description: "Customer support tickets"
-    physical_name: "FactSupportTicket"
+    physical_name: "silver_fact_support_interaction"
     primary_key: "TICKET_ID"
     attributes:
       - name: ticket_id
@@ -327,7 +327,7 @@ entities:
 
   - name: campaigns
     description: "Marketing campaigns"
-    physical_name: "DimCampaign"
+    physical_name: "silver_dim_campaign"
     primary_key: "CampaignSK"
     attributes:
       - name: campaign_id
@@ -367,7 +367,7 @@ entities:
 
   - name: campaign_targets
     description: "Targets of marketing campaigns"
-    physical_name: "fact_campaign_target"
+    physical_name: "silver_fact_campaign_response"
     primary_key: "TARGET_ID"
     attributes:
       - name: target_id
@@ -402,7 +402,7 @@ entities:
 
   - name: network_outages
     description: "Network outage incidents"
-    physical_name: "FactNetworkOutage"
+    physical_name: "silver_fact_network_outage"
     primary_key: "OUTAGE_ID"
     attributes:
       - name: outage_id

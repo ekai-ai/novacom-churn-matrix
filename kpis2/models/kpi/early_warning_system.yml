@@ -1,0 +1,138 @@
+version: 2
+
+models:
+  - name: early_warning_system
+    description: |
+      Early Warning System Dashboard - Operationalizes network churn risk scores into actionable alerts and interventions.
+      
+      This dashboard model transforms risk scores into business-ready alerts with:
+      - Prioritized customer contact lists based on risk and value
+      - Specific intervention recommendations for each at-risk customer
+      - Financial impact assessment and revenue at risk calculations
+      - Recommended contact timeframes and escalation paths
+      
+      Business Value:
+      - Enables proactive customer retention campaigns
+      - Provides clear action plans for customer success teams
+      - Quantifies financial impact of potential churn
+      - Optimizes resource allocation for retention efforts
+      
+      Update Frequency: Monthly (after network_churn_risk_score updates)
+      Target Users: Customer Success, Account Management, Network Operations
+      
+    columns:
+      - name: customer_id
+        description: Unique identifier for the at-risk customer
+        tests:
+          - not_null
+          - relationships:
+              to: ref('DimCustomer')
+              field: customer_id
+              
+      - name: network_churn_risk_score
+        description: Customer's current network-driven churn risk score (0-100)
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 30
+              max_value: 100
+              
+      - name: risk_level
+        description: Categorical risk level (only Medium, High, Critical customers included)
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Medium', 'High', 'Critical']
+              
+      - name: alert_severity
+        description: Business alert priority level for action prioritization
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Monitor', 'Low Priority', 'Medium Priority', 'High Priority', 'Immediate Action Required']
+              
+      - name: contact_priority_score
+        description: |
+          Composite priority score (1-100) for customer contact sequencing.
+          Considers risk score, customer tier, revenue, and score trends.
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 1
+              max_value: 100
+              
+      - name: primary_intervention
+        description: Recommended primary intervention based on highest risk component
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Network Infrastructure Review', 'Dedicated Support Assignment', 'Service Usage Consultation', 'Quality Assurance Check', 'General Account Review']
+              
+      - name: secondary_intervention
+        description: Recommended secondary intervention based on customer profile
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['VIP Retention Program', 'Account Manager Contact', 'Loyalty Program Enrollment', 'Service Credit Offer', 'Standard Retention Process']
+              
+      - name: recommended_contact_timeframe
+        description: Urgency-based timeframe for customer outreach
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Within 24 hours', 'Within 3 days', 'Within 1 week', 'Within 2 weeks']
+              
+      - name: potential_revenue_at_risk
+        description: Estimated annual revenue that could be lost if customer churns
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 1000000
+              severity: warn
+              
+      - name: customer_segment
+        description: Customer business segment
+        tests:
+          - accepted_values:
+              values: ['Residential', 'SMB', 'Enterprise', 'Government']
+              
+      - name: customer_tier
+        description: Customer service tier level
+        tests:
+          - accepted_values:
+              values: ['Bronze', 'Silver', 'Gold', 'Platinum']
+              
+      - name: monthly_revenue
+        description: Customer's monthly recurring revenue
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 50000
+              severity: warn
+              
+      - name: tenure_months
+        description: Customer tenure in months since account creation
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 600
+              severity: warn
+              
+      - name: score_change_month_over_month
+        description: Change in risk score from previous month (positive = increasing risk)
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: -100
+              max_value: 100
+              
+      - name: target_contact_date
+        description: Calculated target date for customer contact based on urgency
+        tests:
+          - not_null
+          
+      - name: alert_generated_at
+        description: Timestamp when the alert was generated
+        tests:
+          - not_null

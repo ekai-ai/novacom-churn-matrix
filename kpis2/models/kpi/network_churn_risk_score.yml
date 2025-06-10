@@ -1,0 +1,129 @@
+version: 2
+
+models:
+  - name: network_churn_risk_score
+    description: |
+      Network-Driven Churn Risk Score (NCRS) - Predicts customer churn risk based on network performance issues.
+      
+      This KPI combines multiple network-related factors to create a composite risk score (0-100):
+      - Network incidents affecting customer (40% weight)
+      - Support tickets related to network issues (30% weight) 
+      - Usage pattern changes indicating dissatisfaction (20% weight)
+      - Service quality metrics like peak overload incidents (10% weight)
+      
+      Business Value:
+      - Enables proactive retention before customers decide to leave
+      - Identifies network infrastructure issues impacting customer satisfaction
+      - Provides early warning system 30-60 days before traditional churn indicators
+      - Helps prioritize network investments based on customer impact
+      
+      Update Frequency: Monthly
+      Data Freshness: Previous month's data
+      
+    columns:
+      - name: customer_id
+        description: Unique identifier for the customer
+        tests:
+          - not_null
+          - relationships:
+              to: ref('DimCustomer')
+              field: customer_id
+              
+      - name: analysis_month
+        description: Month for which the risk score is calculated (YYYY-MM-01 format)
+        tests:
+          - not_null
+          
+      - name: network_churn_risk_score
+        description: |
+          Composite risk score from 0-100, where higher scores indicate greater churn risk.
+          Weighted calculation: Network incidents (40%) + Support tickets (30%) + Usage decline (20%) + Service quality (10%)
+        tests:
+          - not_null
+          - accepted_values:
+              values: [0, 100]
+              quote: false
+              severity: warn
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100
+              
+      - name: risk_level
+        description: Categorical risk level based on score thresholds
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Low', 'Medium', 'High', 'Critical']
+              
+      - name: network_incident_score
+        description: Score component for network outages and incidents (0-100)
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100
+              
+      - name: support_ticket_score
+        description: Score component for network-related support tickets (0-100)
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100
+              
+      - name: usage_decline_score
+        description: Score component for declining usage patterns (0-100)
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100
+              
+      - name: service_quality_score
+        description: Score component for service quality issues (0-100)
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100
+              
+      - name: outage_count
+        description: Number of network outages affecting the customer in the analysis month
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 1000
+              severity: warn
+              
+      - name: unplanned_outages
+        description: Number of unplanned outages (subset of total outages)
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 1000
+              severity: warn
+              
+      - name: network_ticket_count
+        description: Number of support tickets related to network issues
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100
+              severity: warn
+              
+      - name: current_usage_gb
+        description: Customer's data usage in GB for the analysis month
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 10000
+              severity: warn
+              
+      - name: prev_month_usage_gb
+        description: Customer's data usage in GB for the previous month
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 10000
+              severity: warn
+              
+      - name: calculated_at
+        description: Timestamp when the score was calculated
+        tests:
+          - not_null
